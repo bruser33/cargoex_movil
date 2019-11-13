@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/modal">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView6"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="-140dp"
+            android:layout_marginRight="130dp"
+            android:src="@drawable/alert"
+            app:srcCompat="@drawable/alert" />
+        <TextView
+            android:id="@+id/alerta"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-140dp"
+            android:fontFamily="@font/titillium_web"
+            android:text="ATENCION"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#202156"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/divider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-130dp"
+            android:text="________________________________"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#C0C0C0"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/titillium_web"
+            android:layout_gravity="center"
+            android:layout_marginTop="-15dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="Este es un mensaje de error"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#202156"
+            android:textSize="16sp" />
+
+        <Button
+            android:id="@+id/ok"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:background="@drawable/botonceleste2"
+            android:layout_gravity="center"
+            android:layout_marginTop="105dp"
+            android:elevation="25dp"
+            android:onClick="ok"
+            android:text="OK"
+            android:textColor="#ffffff"
+            android:fontFamily="@font/titillium_web"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

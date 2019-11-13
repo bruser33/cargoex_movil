@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/fondo5">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="-10dp"
+            android:src="@mipmap/logorojo2" />
+
+
+        <TextView
+            android:id="@+id/fecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="7dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="5656865"
+            android:textColor="#202156"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/nombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="50dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="H REQUELME CORDOVA"
+            android:textColor="#202156"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/i"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-150dp"
+            android:layout_marginEnd="7dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="RETIRO"
+            android:textColor="#202156"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/si"
+            android:layout_width="190dp"
+            android:layout_height="55dp"
+            android:background="@drawable/action"
+            android:layout_gravity="center"
+            android:layout_marginTop="-50dp"
+            android:elevation="30dp"
+            android:onClick="biometria"
+            android:fontFamily="@font/titillium_web"
+            android:text="CON HUELLA"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/no"
+            android:layout_width="190dp"
+            android:layout_height="55dp"
+            android:background="@drawable/action"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:elevation="30dp"
+            android:fontFamily="@font/titillium_web"
+            android:onClick="normal"
+            android:text="SIN HUELLA"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="630dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="3dp"
+            android:fontFamily="@font/titillium_web"
+            android:text="@string/version"
+            android:textColor="#0E004D"
+            android:textSize="15sp" />
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

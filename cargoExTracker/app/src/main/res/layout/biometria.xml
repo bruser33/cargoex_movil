@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/fondo5">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/od"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="left"
+            android:layout_marginTop="60dp"
+            android:background="#202156"
+            android:layout_weight="1"
+            android:paddingLeft="2dp"
+            android:paddingTop="4dp"
+            android:fontFamily="@font/titillium_web"
+            android:text="OD: 5475888145248"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="-10dp"
+            android:src="@mipmap/logorojo2" />
+
+
+        <TextView
+            android:id="@+id/fecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="7dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="5656865"
+            android:textColor="#202156"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/nombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="50dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="H REQUELME CORDOVA"
+            android:textColor="#202156"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/i"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-160dp"
+            android:layout_marginEnd="7dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="INGRESA RUT"
+            android:textColor="#202156"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+        <EditText
+            android:id="@+id/rutCliente"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="-85dp"
+            android:layout_marginRight="43dp"
+
+            android:ems="10"
+            android:textSize="18sp"
+            android:paddingTop="6dp"
+            android:paddingLeft="8dp"
+            android:hint="RUT RECEPTOR"
+            android:fontFamily="@font/titillium_web"
+            android:textColor="#202156"
+            android:maxLength="8"
+            android:textColorHint="#668B8B"
+            android:inputType="number"
+            android:background="@drawable/modal"
+            android:gravity="top"
+            />
+        <EditText
+            android:id="@+id/dv"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:textSize="20sp"
+            android:layout_marginTop="-85dp"
+            android:paddingTop="5dp"
+            android:maxLength="1"
+            android:layout_marginLeft="115dp"
+            android:paddingLeft="8dp"
+            android:hint="DV"
+            android:fontFamily="@font/titillium_web"
+            android:textColor="#202156"
+            android:inputType="textCapCharacters"
+            android:textColorHint="#668B8B"
+            android:background="@drawable/modal"
+            android:layout_gravity="center"
+            />
+        <TextView
+            android:id="@+id/raya"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="-85dp"
+            android:layout_marginLeft="70dp"
+            android:fontFamily="@font/titillium_web"
+            android:text="-"
+            android:textColor="#202156"
+            android:layout_gravity="center"
+            android:textSize="30sp" />
+        <Button
+            android:id="@+id/escanear"
+            android:layout_width="190dp"
+            android:layout_height="55dp"
+            android:background="@drawable/action"
+            android:layout_gravity="center"
+            android:elevation="30dp"
+            android:onClick="escanear"
+            android:fontFamily="@font/titillium_web"
+            android:text="ESCANEAR"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="630dp"
+            android:layout_weight="1"
+            android:layout_marginEnd="3dp"
+            android:fontFamily="@font/titillium_web"
+            android:text="@string/version"
+            android:textColor="#0E004D"
+            android:textSize="15sp" />
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

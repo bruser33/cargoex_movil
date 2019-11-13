@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/fondo5">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="630dp"
+            android:layout_marginEnd="3dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="@string/version"
+            android:textColor="#0E004D"
+            android:textSize="15sp" />
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="-10dp"
+            android:src="@mipmap/logorojo2" />
+
+
+
+        <TextView
+            android:id="@+id/fecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="7dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="5656865"
+            android:textColor="#202156"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/nombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="50dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="H REQUELME CORDOVA"
+            android:textColor="#202156"
+            android:textSize="14sp" />
+
+
+        <TextView
+            android:id="@+id/i"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-200dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="COMPLETA FORMULARIO"
+            android:textColor="#202156"
+            android:textSize="27.5sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/huella"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:elevation="6dp"
+            android:layout_marginStart="125dp"
+            android:layout_marginTop="-150dp"
+            android:src="@mipmap/huella" />
+        <EditText
+            android:id="@+id/nombreCliente"
+            android:layout_width="295dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:textSize="18sp"
+            android:paddingTop="5dp"
+            android:paddingLeft="15dp"
+            android:hint="NOMBRE RECEPTOR"
+            android:fontFamily="@font/titillium_web"
+            android:textColor="#202156"
+            android:textColorHint="#668B8B"
+            android:background="@drawable/modal"
+            android:inputType="none"
+            android:maxLength="25"
+            android:layout_gravity="center"
+            android:layout_marginTop="-150dp"
+            />
+        <EditText
+            android:id="@+id/bultos"
+            android:layout_width="295dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:textSize="18sp"
+            android:paddingTop="5dp"
+            android:paddingLeft="15dp"
+            android:hint="BULTOS"
+            android:fontFamily="@font/titillium_web"
+            android:textColor="#202156"
+            android:inputType="number"
+            android:textColorHint="#668B8B"
+            android:background="@drawable/modal"
+            android:layout_gravity="center"
+            android:layout_marginTop="-100dp"
+            />
+
+        <ImageView
+            android:id="@+id/imageVie7"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="-50dp"
+            android:layout_marginStart="130dp"
+            android:elevation="5dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="0dp"
+            android:src="@mipmap/flecha" />
+        <Spinner
+            android:id="@+id/clientes"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:maxLength="23"
+            android:backgroundTint="#00ff001C"
+            android:fontFamily="@font/titillium_web"
+            android:popupBackground="#00ff001C"
+            android:layout_marginStart="25dp"
+            android:spinnerMode="dialog"
+            android:layout_marginTop="-50dp"
+            android:textColor="#202156" />
+
+        <EditText
+            android:id="@+id/direccion"
+            android:layout_width="295dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:textSize="16sp"
+            android:paddingTop="7dp"
+            android:paddingLeft="15dp"
+            android:hint="Direccion "
+            android:fontFamily="@font/titillium_web"
+            android:textColor="#202156"
+            android:maxLength="28"
+            android:inputType="number"
+            android:textColorHint="#668B8B"
+            android:background="@drawable/modal"
+            android:layout_gravity="center"
+            android:gravity="top"
+            />
+        <TextView
+            android:id="@+id/opcional1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:elevation="5dp"
+            android:paddingLeft="110dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="(opcional)"
+            android:textColor="#668B8B"
+            android:textSize="15sp" />
+        <ImageView
+            android:id="@+id/camera1"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:elevation="5dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="50dp"
+            android:src="@mipmap/camera" />
+        <Button
+            android:id="@+id/foto1"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:background="@drawable/bceleste"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:elevation="30dp"
+            android:onClick="ClickCamera1"
+            android:fontFamily="@font/titillium_web"
+            android:text="TOMAR FOTO 1"
+            android:textColor="#202156"
+            android:paddingRight="75dp"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/opcional2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:elevation="5dp"
+            android:paddingLeft="110dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="(opcional)"
+            android:textColor="#668B8B"
+            android:textSize="15sp" />
+        <ImageView
+            android:id="@+id/camera2"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:elevation="5dp"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="100dp"
+            android:src="@mipmap/camera" />
+
+        <Button
+            android:id="@+id/foto2"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:background="@drawable/bceleste"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:textColor="#202156"
+            android:onClick="ClickCamera2"
+            android:paddingRight="75dp"
+            android:elevation="30dp"
+            android:fontFamily="@font/titillium_web"
+            android:text="TOMAR FOTO 2"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+
+
+        <EditText
+            android:id="@+id/comentarios"
+            android:layout_width="295dp"
+            android:layout_height="80dp"
+            android:ems="10"
+            android:textSize="15sp"
+            android:paddingLeft="15dp"
+            android:paddingTop="8dp"
+            android:hint="Puedes escribir algun comentario."
+            android:fontFamily="@font/titillium_web"
+            android:textColor="#202156"
+            android:textColorHint="#202156"
+            android:background="@drawable/myborder"
+            android:layout_gravity="center"
+            android:gravity="top"
+            android:layout_marginTop="170dp"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/retirar"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:background="@drawable/action"
+            android:layout_gravity="center"
+            android:elevation="30dp"
+            android:onClick="retirar"
+            android:layout_marginTop="245dp"
+            android:fontFamily="@font/titillium_web"
+            android:text="CARGA RETIRADA"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>

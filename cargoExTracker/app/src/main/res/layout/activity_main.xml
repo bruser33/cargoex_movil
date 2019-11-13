@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/White"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|center"
+        android:orientation="vertical"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp">
+
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="consultar"
+            android:text="Button" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_marginTop="10dp"
+            app:srcCompat="@mipmap/logo" />
+
+        <EditText
+            android:id="@+id/rut"
+            android:layout_width="132dp"
+            android:layout_height="62dp"
+            android:layout_marginTop="1dp"
+            android:hint="Rut"
+            android:textSize="10sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="50dp"
+            tools:layout_editor_absoluteY="110dp"
+            tools:text="RUT" />
+
+        <EditText
+            android:id="@+id/verificador"
+            android:layout_width="132dp"
+            android:layout_height="62dp"
+            android:layout_marginTop="5dp"
+            android:hint="Verificador"
+            android:textSize="10sp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="114dp"
+            tools:layout_editor_absoluteY="180dp"
+            tools:text="VERIFICADOR" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="165dp"
+            android:layout_height="62dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            android:onClick="insertar"
+            android:text="Verificar Huella"
+            android:textSize="10sp"
+            tools:ignore="MissingConstraints"
+            tools:layout_editor_absoluteX="101dp"
+            tools:layout_editor_absoluteY="16dp" />
+
+        <TextView
+            android:id="@+id/texto"
+            android:layout_width="330dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="30dp"
+            android:text="Datos de respuesta"
+            android:textAlignment="viewStart"
+            android:textColor="@color/colorPrimary"
+            android:textSize="10sp" />
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/modal">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:ignore="MissingConstraints">
+
+
+        <TextView
+            android:id="@+id/titulo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/titillium_web"
+            android:text="TITULO"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#202156"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/salir"
+            android:layout_width="45dp"
+            android:layout_height="35dp"
+            android:layout_gravity="right"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/bceleste2"
+            android:elevation="25dp"
+            android:fontFamily="@font/titillium_web"
+            android:onClick="salir"
+            android:text="x"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/divider"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginTop="33dp"
+            android:text="__________________________________"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="#C0C0C0"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="440dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp">
+
+
+            <TableLayout
+                android:id="@+id/certificaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+            </TableLayout>
+        </ScrollView>
+
+
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

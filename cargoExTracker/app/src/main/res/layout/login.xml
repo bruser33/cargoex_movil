@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@mipmap/fondoc"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-120dp"
+            android:layout_gravity="center"
+            android:src="@mipmap/logologin2"
+            tools:srcCompat="@mipmap/logologin2" />
+        <TextView
+            android:id="@+id/raya"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-15dp"
+            android:layout_marginStart="80dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="-"
+            android:textColor="#F0F0F0"
+            android:textSize="30sp" />
+        <EditText
+            android:id="@+id/user"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="-10dp"
+            android:layout_marginRight="40dp"
+            android:background="@drawable/modal3"
+            android:ems="10"
+            android:inputType="number"
+            android:paddingLeft="10dp"
+            android:fontFamily="@font/titillium_web"
+            android:maxLength="9"
+            android:hint="RUT"
+            android:textColor="#202156"
+            android:textColorHint="#668B8B"
+            android:textSize="20sp" />
+        <EditText
+            android:id="@+id/dv"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="155dp"
+            android:layout_marginTop="-10dp"
+            android:layout_marginRight="34dp"
+            android:background="@drawable/modal3"
+            android:ems="10"
+            android:fontFamily="@font/titillium_web"
+            android:gravity="top"
+            android:hint="DV"
+            android:inputType="textCapCharacters"
+            android:maxLength="1"
+            android:paddingLeft="8dp"
+            android:paddingTop="4dp"
+            android:textColor="#202156"
+            android:textColorHint="#668B8B"
+            android:textSize="20sp" />
+        <EditText
+            android:id="@+id/pass"
+            android:layout_width="290dp"
+            android:layout_height="40dp"
+            android:background="@drawable/modal3"
+            android:layout_marginTop="60dp"
+            android:maxLength="6"
+            android:hint="CLAVE"
+            android:ems="10"
+            android:paddingLeft="10dp"
+            android:layout_gravity="center"
+            android:textColor="#202156"
+            android:textColorHint="#668B8B"
+            android:fontFamily="@font/titillium_web"
+            android:inputType="textPassword"
+            android:textSize="20sp" />
+            <Button
+            android:id="@+id/enter"
+            android:layout_width="290dp"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="150dp"
+            android:elevation="30dp"
+            android:layout_gravity="center"
+            android:background="@mipmap/enter"
+            android:onClick="accion"
+           />
+        <ImageView
+            android:id="@+id/charge"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center_horizontal|center_vertical"
+            android:layout_marginTop="50dp"
+            android:src="@drawable/trans"
+            android:visibility="invisible"
+            app:srcCompat="@drawable/trans" />
+    </FrameLayout>
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/fondo5">
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/version"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="630dp"
+            android:layout_marginEnd="3dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="@string/version"
+            android:textColor="#0E004D"
+            android:textSize="15sp" />
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginStart="2dp"
+            android:layout_marginTop="-10dp"
+            android:src="@mipmap/logorojo2" />
+
+
+
+        <TextView
+            android:id="@+id/fecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="7dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="5656865"
+            android:textColor="#202156"
+            android:textSize="23sp"
+            android:textStyle="bold" />
+        <TextView
+            android:id="@+id/nombre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="50dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="H REQUELME CORDOVA"
+            android:textColor="#202156"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/od"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="left"
+            android:layout_marginTop="60dp"
+            android:background="#202156"
+            android:layout_weight="1"
+            android:paddingLeft="2dp"
+            android:paddingTop="4dp"
+            android:fontFamily="@font/titillium_web"
+            android:text="OD: 5475888145248"
+            android:textColor="#ffffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/i"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-170dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="COMPLETA FORMULARIO"
+            android:textColor="#008000"
+            android:textSize="27.5sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/nombreCliente"
+            android:layout_width="295dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="-100dp"
+            android:layout_gravity="center"
+            android:ems="10"
+            android:textSize="18sp"
+            android:paddingTop="5dp"
+            android:paddingLeft="15dp"
+            android:hint="NOMBRE RECEPTOR"
+            android:fontFamily="@font/titillium_web"
+            android:textColor="#202156"
+            android:textColorHint="#668B8B"
+            android:background="@drawable/modal"
+            android:inputType="textCapCharacters"
+            android:gravity="top"
+            />
+        <EditText
+            android:id="@+id/rutCliente"
+            android:layout_width="200dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="-50dp"
+            android:layout_marginRight="43dp"
+            android:ems="10"
+            android:textSize="18sp"
+            android:paddingTop="5dp"
+            android:paddingLeft="8dp"
+            android:hint="RUT RECEPTOR"
+            android:fontFamily="@font/titillium_web"
+            android:textColor="#202156"
+            android:maxLength="8"
+            android:textColorHint="#668B8B"
+            android:inputType="number"
+            android:background="@drawable/modal"
+            android:gravity="top"
+            />
+        <TextView
+            android:id="@+id/raya"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="-50dp"
+            android:layout_marginStart="80dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/titillium_web"
+            android:text="-"
+            android:textColor="#202156"
+            android:textSize="30sp" />
+
+        <EditText
+            android:id="@+id/dv"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="-50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="155dp"
+            android:ems="10"
+            android:textSize="18sp"
+            android:layout_marginRight="34dp"
+            android:paddingTop="4dp"
+            android:maxLength="1"
+            android:paddingLeft="8dp"
+            android:hint="DV"
+            android:fontFamily="@font/titillium_web"
+            android:textColor="#202156"
+            android:inputType="textCapCharacters"
+            android:textColorHint="#668B8B"
+            android:background="@drawable/modal"
+            android:gravity="top"
+            />
+
+        <Button
+            android:id="@+id/foto1"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:background="@drawable/bceleste"
+            android:layout_gravity="center"
+            android:layout_marginTop="0dp"
+            android:elevation="30dp"
+            android:onClick="ClickCamera1"
+            android:fontFamily="@font/titillium_web"
+            android:text="TOMAR FOTO 1"
+            android:textColor="#202156"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/camera1"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:elevation="5dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="0dp"
+            android:src="@mipmap/camera" />
+        <ImageView
+            android:id="@+id/camera2"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:elevation="5dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="50dp"
+            android:src="@mipmap/camera" />
+
+
+        <Button
+            android:id="@+id/foto2"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:background="@drawable/bceleste"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp"
+            android:textColor="#202156"
+            android:onClick="ClickCamera2"
+            android:elevation="30dp"
+            android:fontFamily="@font/titillium_web"
+            android:text="TOMAR FOTO 2"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/camera3"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:elevation="5dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="120dp"
+            android:layout_marginTop="100dp"
+            android:src="@mipmap/camera" />
+        <Button
+            android:id="@+id/foto3"
+            android:layout_width="300dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"
+            android:background="@drawable/bceleste"
+            android:elevation="30dp"
+            android:fontFamily="@font/titillium_web"
+            android:onClick="ClickCamera3"
+            android:text="TOMAR FOTO 3"
+            android:textColor="#202156"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/comentarios"
+            android:layout_width="295dp"
+            android:layout_height="70dp"
+            android:ems="10"
+            android:textSize="15sp"
+            android:paddingLeft="15dp"
+            android:paddingTop="8dp"
+            android:hint="Puedes escribir algun comentario."
+            android:fontFamily="@font/titillium_web"
+            android:textColor="#202156"
+            android:textColorHint="#202156"
+            android:background="@drawable/myborder"
+            android:layout_gravity="center"
+            android:gravity="top"
+            android:layout_marginTop="170dp"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:id="@+id/entregar"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bgreen"
+            android:layout_gravity="center"
+            android:elevation="30dp"
+            android:onClick="entregar"
+            android:layout_marginTop="240dp"
+            android:fontFamily="@font/titillium_web"
+            android:text="CARGA ENTREGADA"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+
+    </FrameLayout>
+
+</android.support.constraint.ConstraintLayout>
