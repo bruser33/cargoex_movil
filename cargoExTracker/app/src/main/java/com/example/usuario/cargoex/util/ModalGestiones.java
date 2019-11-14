@@ -204,6 +204,7 @@ public class ModalGestiones extends Activity {
             final Cursor cursor = db.rawQuery("SELECT * FROM certificaciones WHERE codChofer = " + codigo, null);
             Log.e("tabla","el tamaño total es "+cursor.getCount());
             while (cursor.moveToNext()) {
+                Log.e("tabla",cursor.toString());
                 Log.e("tabla","El identificacdor es "+cursor.getString(16));
                 if(cursor.getString(16).equals(identificador)){
 

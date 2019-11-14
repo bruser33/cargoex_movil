@@ -816,16 +816,16 @@ public class Dashboard extends AppCompatActivity implements AsyncResponse {
      //       Log.e("state", "tamaño de sincronizacion es " + cursor.getCount());
             while (cursor.moveToNext()) {
                 String[] fechaFormat = cursor.getString(12).split(" ");
-
+                Log.e("cursor", cursor.toString());
                 if (cursor.getString(13).equals("null")) {
                     faltaTransmitir++;
                     Log.e("state", "od es" + cursor.getString(6) + "con status" + cursor.getString(13));
                 }
-                if (cursor.getString(15).equals("0") && fecha3.equals(fechaFormat[0])) {
+                if ( cursor.getString(16).equals("entregas") && fecha3.equals(fechaFormat[0])) {
                     entregas++;
-                } else if (cursor.getString(15).equals("99") && fecha3.equals(fechaFormat[0])) {
+                } else if (cursor.getString(16).equals("retiro") && fecha3.equals(fechaFormat[0])) {
                     retirados++;
-                } else if (fecha3.equals(fechaFormat[0])) {
+                } else  {
                     devoluciones++;
                 }
             }
