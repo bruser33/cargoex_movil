@@ -172,11 +172,17 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
             setContentView(R.layout.masivos);
             scanner.stopCamera();
             this.flagCamara = false;
-             //this.cargarLista();
+            this.cargarLista();
+            ciudad=(TextView) findViewById(R.id.ciudad);
+            sizeTns=(TextView) findViewById(R.id.sizetns);
+            sizeTotal=(TextView) findViewById(R.id.sizetotal);
+            ciudad.setText("Región: "+this.regionActual);
+            sizeTns.setText("TNS: "+listaOd.size());
+            sizeTotal.setText("TOTAL: "+ this.tnsTotales.length());
         } else{
                 super.onBackPressed();
             }
-       // this.cargarLista();
+      //this.cargarLista();
     }
 
     public void cargarLista(){
@@ -239,8 +245,8 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
     public boolean isHere(String dato){
         for(int i =0;i<this.tnsTotales.length();i++){
             try {
-                int tnAux = Integer.parseInt(this.tnsTotales.getJSONObject(i).getString("TN"));
-                int tnAux2 = Integer.parseInt(dato);
+                double tnAux = Double.parseDouble(this.tnsTotales.getJSONObject(i).getString("TN"));
+                double tnAux2 = Double.parseDouble(dato);
                  Log.e("here", tnAux+"");
                  Log.e("here", tnAux2+"" );
                 if(tnAux==tnAux2){
@@ -263,6 +269,8 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
         setContentView(R.layout.masivos);
         scanner.stopCamera();
         this.flagCamara = false;
+        imageCharge = (ImageView)findViewById(R.id.charge);
+        cargando = (AnimationDrawable)imageCharge.getDrawable();
         imageCharge.setVisibility(View.VISIBLE);
         cargando.start();
         if(listaOd.contains(dato) ){
@@ -288,8 +296,8 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
             this.cargarLista();
             for(int i =0;i<this.tnsTotales.length();i++){
                 try {
-                    int tnAux = Integer.parseInt(this.tnsTotales.getJSONObject(i).getString("TN"));
-                    int tnAux2 = Integer.parseInt(dato);
+                    double tnAux = Double.parseDouble(this.tnsTotales.getJSONObject(i).getString("TN"));
+                    double tnAux2 = Double.parseDouble(dato);
                     //  Log.e("cerrar", tnAux);
                     //  Log.e("cerrar",tnActual );
                     if(tnAux==tnAux2){
@@ -469,6 +477,9 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
                         mediaPlayer = MediaPlayer.create(this, R.raw.ok);
                         mediaPlayer.start();
                         JSONArray datos = jsonObject.getJSONArray("datos");
+                        if(datos.length()>0){
+
+
                         JSONObject objeto = datos.getJSONObject(0);
                         this.ciudad=(TextView) findViewById(R.id.ciudad);
                         this.sizeTns=(TextView) findViewById(R.id.sizetns);
@@ -484,8 +495,9 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
                         imageCharge.setVisibility(View.INVISIBLE);
                         for(int i =0;i<this.tnsTotales.length();i++){
                             try {
-                                int tnAux = Integer.parseInt(this.tnsTotales.getJSONObject(i).getString("TN"));
-                                int tnAux2 = Integer.parseInt(tnActual);
+                                double tnAux = Double.parseDouble(this.tnsTotales.getJSONObject(i).getString("TN"));
+                                Log.e("msj","actual"+tnActual);
+                                double tnAux2 = Double.parseDouble(tnActual);
                               //  Log.e("cerrar", tnAux);
                               //  Log.e("cerrar",tnActual );
                                 if(tnAux==tnAux2){
@@ -503,7 +515,15 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
                         this.cargarLista();
                         cargando.stop();
                         imageCharge.setVisibility(View.INVISIBLE);
-
+                        }else{
+                            this.cargado=false;
+                            mediaPlayer = MediaPlayer.create(this, R.raw.nook);
+                            mediaPlayer.start();
+                            modal.putExtra("error", "TNS VACIOS");
+                            startActivity(modal);
+                            cargando.stop();
+                            imageCharge.setVisibility(View.INVISIBLE);
+                        }
                     }else{
                         MediaPlayer mediaPlayer;
                         mediaPlayer = MediaPlayer.create(this, R.raw.nook);
@@ -632,12 +652,13 @@ class EnvioAgente extends AsyncTask<Object, Integer, String> {
 
     @Override
     protected String doInBackground(Object... params) {
+
         if (!isOnlineNet()) {
             return "false";
         } else {
             Log.e("verifica","llego a usar el servicio de verificacion");
             String respuesta = "";
-            String sql = "http://192.168.0.23:5000/cerrarManifiestoAgente";
+            String sql = "http://app.cargoex.cl:5000/cerrarManifiestoAgente";
             Log.e("Verifica","PASO POR AQUI1 ");
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);

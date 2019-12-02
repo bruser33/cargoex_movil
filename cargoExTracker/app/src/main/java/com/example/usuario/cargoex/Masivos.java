@@ -175,11 +175,21 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
             setContentView(R.layout.masivos);
             scanner.stopCamera();
             this.flagCamara = false;
-             //this.cargarLista();
+            Log.e("msj","region"+this.regionActual);
+            ciudad=(TextView) findViewById(R.id.ciudad);
+            sizeTns=(TextView) findViewById(R.id.sizetns);
+            sizeTotal=(TextView) findViewById(R.id.sizetotal);
+            ciudad.setText("Región: "+this.regionActual);
+            sizeTns.setText("TNS: "+listaOd.size());
+            sizeTotal.setText("TOTAL: "+ this.tnsTotales.length());
+            this.cargarLista();
+
+            Log.e("msj","llego por si");
         } else{
+            Log.e("msj","llego por no");
                 super.onBackPressed();
             }
-       // this.cargarLista();
+      //this.cargarLista();
     }
 
     public void cargarLista(){
@@ -242,8 +252,8 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
     public boolean isHere(String dato){
         for(int i =0;i<this.tnsTotales.length();i++){
             try {
-                int tnAux = Integer.parseInt(this.tnsTotales.getJSONObject(i).getString("TN"));
-                int tnAux2 = Integer.parseInt(dato);
+                double tnAux = Double.parseDouble(this.tnsTotales.getJSONObject(i).getString("TN"));
+                double tnAux2 = Double.parseDouble(dato);
                  Log.e("here", tnAux+"");
                  Log.e("here", tnAux2+"" );
                 if(tnAux==tnAux2){
@@ -266,6 +276,8 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
         setContentView(R.layout.masivos);
         scanner.stopCamera();
         this.flagCamara = false;
+        imageCharge = (ImageView)findViewById(R.id.charge);
+        cargando = (AnimationDrawable)imageCharge.getDrawable();
         imageCharge.setVisibility(View.VISIBLE);
         cargando.start();
         if(listaOd.contains(dato) ){
@@ -282,8 +294,6 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
             imageCharge.setVisibility(View.INVISIBLE);
         }else if(!cargado){ this.uso(dato);
 
-        //aqui nueva camara
-            //this.abrirScaner();
         }else if(isHere(dato)){
             Log.e("here","si esta aqui");
             listaOd.add(dato);
@@ -291,8 +301,8 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
             this.cargarLista();
             for(int i =0;i<this.tnsTotales.length();i++){
                 try {
-                    int tnAux = Integer.parseInt(this.tnsTotales.getJSONObject(i).getString("TN"));
-                    int tnAux2 = Integer.parseInt(dato);
+                    double tnAux = Double.parseDouble(this.tnsTotales.getJSONObject(i).getString("TN"));
+                    double tnAux2 = Double.parseDouble(dato);
                     //  Log.e("cerrar", tnAux);
                     //  Log.e("cerrar",tnActual );
                     if(tnAux==tnAux2){
@@ -480,6 +490,7 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
                         Log.e("here","destino"+objeto.getString("CIUDAD_DESTINO"));
                         this.regionActual=objeto.getString("CIUDAD_DESTINO");
                         listaOd.add(tnActual);
+                        Log.e("actual",tnActual);
                         this.tnsTotales = datos;
                         this.sizeTns.setText("TNS: "+listaOd.size());
                         this.sizeTotal.setText("TOTAL: "+ datos.length());
@@ -487,8 +498,8 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
                         imageCharge.setVisibility(View.INVISIBLE);
                         for(int i =0;i<this.tnsTotales.length();i++){
                             try {
-                                int tnAux = Integer.parseInt(this.tnsTotales.getJSONObject(i).getString("TN"));
-                                int tnAux2 = Integer.parseInt(tnActual);
+                                double tnAux = Double.parseDouble(this.tnsTotales.getJSONObject(i).getString("TN"));
+                                double tnAux2 = Double.parseDouble(tnActual);
                               //  Log.e("cerrar", tnAux);
                               //  Log.e("cerrar",tnActual );
                                 if(tnAux==tnAux2){
