@@ -77,10 +77,10 @@
             android:textColor="#202156"
             android:textSize="14sp" />
         <EditText
-            android:id="@+id/ingresoOd"
-            android:layout_width="240dp"
+            android:id="@+id/ingresoOdd"
+            android:layout_width="220dp"
             android:layout_height="40dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="210dp"
             android:paddingLeft="15dp"
             android:background="@drawable/modal"
@@ -95,7 +95,7 @@
             android:id="@+id/mas"
             android:layout_width="50dp"
             android:layout_height="40dp"
-            android:layout_marginStart="290dp"
+            android:layout_marginStart="240dp"
             android:layout_marginTop="210dp"
             android:background="@drawable/action"
             android:elevation="30dp"
@@ -106,34 +106,44 @@
             android:paddingBottom="10dp"
             android:textSize="25sp"
             android:textStyle="bold" />
-
+        <Button
+            android:id="@+id/scan"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="300dp"
+            android:layout_marginTop="210dp"
+            android:background="@drawable/ic_settings_overscan_black_24dp"
+            android:elevation="30dp"
+            android:fontFamily="@font/titillium_web"
+            android:onClick="Escanear"
+            android:textStyle="bold" />
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="340dp"
+            android:layout_height="290dp"
             android:layout_marginTop="260dp">
-
             <LinearLayout
                 android:id="@+id/layoutods"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="left"
                 android:orientation="vertical">
-                <Button
-                    android:id="@+id/normal"
-                    android:layout_width="190dp"
-                    android:layout_height="55dp"
-                    android:background="@drawable/action"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="30dp"
-                    android:onClick="normal"
-                    android:elevation="30dp"
-                    android:fontFamily="@font/titillium_web"
-                    android:text="ACEPTAR"
-                    android:textSize="18sp" />
+
             </LinearLayout>
 
          </ScrollView>
 
-
+        <Button
+            android:id="@+id/normal"
+            android:layout_width="190dp"
+            android:layout_height="55dp"
+            android:background="@drawable/action"
+            android:layout_gravity="center"
+            android:layout_marginTop="260dp"
+            android:onClick="normal"
+            android:elevation="30dp"
+            android:fontFamily="@font/titillium_web"
+            android:text="ACEPTAR"
+            android:textSize="18sp" />
         <TextView
             android:id="@+id/version"
             android:layout_width="wrap_content"

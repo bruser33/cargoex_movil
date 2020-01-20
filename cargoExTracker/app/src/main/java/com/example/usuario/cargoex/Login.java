@@ -327,14 +327,12 @@ public class Login extends AppCompatActivity implements AsyncResponse {
     }
 
     public boolean pruebaInt(String s){
-
         try{
             int i = Integer.parseInt(s);
             return true;
         }catch (NumberFormatException n){
             return false;
         }
-
     }
     public boolean numeroVerificador(String s){
         try{

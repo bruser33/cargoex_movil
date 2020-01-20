@@ -22,6 +22,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -182,8 +183,12 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
             ciudad.setText("Región: "+this.regionActual);
             sizeTns.setText("TNS: "+listaOd.size());
             sizeTotal.setText("TOTAL: "+ this.tnsTotales.length());
+            //pongo nombre
+            nombre= (TextView) findViewById(R.id.nombre);
+            prefs = getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
+            String name = prefs.getString("nombre", "");
+            nombre.setText(name);
             this.cargarLista();
-
             Log.e("msj","llego por si");
         } else{
             Log.e("msj","llego por no");
@@ -289,6 +294,13 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
             this.ciudad.setText("Región: "+this.regionActual);
             this.sizeTns.setText("TNS: "+listaOd.size());
             this.sizeTotal.setText("TOTAL: "+ this.tnsTotales.length());
+
+            //pongo nombre
+            nombre= (TextView) findViewById(R.id.nombre);
+            prefs = getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
+            String name = prefs.getString("nombre", "");
+            nombre.setText(name);
+
             this.cargarLista();
             cargando.stop();
             imageCharge.setVisibility(View.INVISIBLE);
@@ -323,6 +335,14 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
             this.ciudad.setText("Región: "+this.regionActual);
             this.sizeTns.setText("TNS: "+listaOd.size());
             this.sizeTotal.setText("TOTAL: "+ this.tnsTotales.length());
+
+            //pongo nombre
+            nombre= (TextView) findViewById(R.id.nombre);
+            prefs = getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
+            String name = prefs.getString("nombre", "");
+            nombre.setText(name);
+
+
             cargando.stop();
             imageCharge.setVisibility(View.INVISIBLE);
             MediaPlayer mediaPlayer;
@@ -340,6 +360,13 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
             this.ciudad.setText("Región: "+this.regionActual);
             this.sizeTns.setText("TNS: "+listaOd.size());
             this.sizeTotal.setText("TOTAL: "+ this.tnsTotales.length());
+
+            //pongo nombre
+            nombre= (TextView) findViewById(R.id.nombre);
+            prefs = getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
+            String name = prefs.getString("nombre", "");
+            nombre.setText(name);
+
             this.cargarLista();
             cargando.stop();
             imageCharge.setVisibility(View.INVISIBLE);
@@ -447,13 +474,11 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
             }
         }else if (requestCode == 1) {
             if (resultCode == RESULT_OK) {
-
                 // get String data from Intent
                 String returnString = data.getStringExtra("status");
                 if (returnString.equals("true")) {
                     this.procesoCerrado();
                 }
-
             }
         }
         else if (requestCode == 2 ) {

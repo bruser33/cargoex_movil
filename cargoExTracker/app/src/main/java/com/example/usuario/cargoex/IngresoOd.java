@@ -9,7 +9,9 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Typeface;
+import android.graphics.drawable.AnimationDrawable;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,8 +21,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.cargo.usuario.cargoex.R;
@@ -33,9 +39,11 @@ import com.example.usuario.cargoex.util.SqliteHelper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.zxing.Result;
 
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -50,9 +58,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
+
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
-public class IngresoOd extends AppCompatActivity implements AsyncResponse  {
+public class IngresoOd extends AppCompatActivity implements AsyncResponse,ZXingScannerView.ResultHandler  {
     private FusedLocationProviderClient client;
     String latitud,longitud,vista="";
     EditText od;
@@ -64,18 +74,21 @@ public class IngresoOd extends AppCompatActivity implements AsyncResponse  {
     LinearLayout ods;
     int contadorOds ;
     ArrayList <String> listaOd;
+    private ZXingScannerView scanner;
+    boolean flagCamara = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ingresood);
-        od=(EditText) findViewById(R.id.ingresoOd);
+        listaOd= new ArrayList<String>();
+//inicializa
+        od=(EditText) findViewById(R.id.ingresoOdd);
         numero=(TextView) findViewById(R.id.od);
         modal= new Intent(this, Modal.class);
         modalVersion = new Intent(this, ModalVersion.class);
-        listaOd= new ArrayList<String>();
         ods=findViewById(R.id.layoutods);
         vista= getIntent().getStringExtra("vista");
-        conn = new SqliteCertificaciones(this,"bd_certificaciones",null,R.string.versionDB);
         od.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) {}
@@ -106,12 +119,22 @@ public class IngresoOd extends AppCompatActivity implements AsyncResponse  {
                 }
             }
         });
-
-        //pongo nombre
+//pongo nombre
         TextView nombre= (TextView) findViewById(R.id.nombre);
-         prefs = getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
+        prefs = getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
         String name = prefs.getString("nombre", "");
         codigo=prefs.getString("codigo", "");
+        nombre.setText(name);
+        //pongo fecha actual en la vista
+        TextView fecha = (TextView) findViewById(R.id.fecha);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy ", Locale.getDefault());
+        Date date = new Date();
+        String fechaHoy = dateFormat.format(date);
+        fecha.setText(fechaHoy);
+//termina
+        conn = new SqliteCertificaciones(this,"bd_certificaciones",null,R.string.versionDB);
+        prefs = getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
+
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("procesado", "false");
         editor.putString("path1", "false");
@@ -120,13 +143,7 @@ public class IngresoOd extends AppCompatActivity implements AsyncResponse  {
         editor.putInt("errorh", 0);
         editor.commit();
 
-        nombre.setText(name);
-        //pongo fecha actual en la vista
-        TextView fecha = (TextView) findViewById(R.id.fecha);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy ", Locale.getDefault());
-        Date date = new Date();
-        String fechaHoy = dateFormat.format(date);
-        fecha.setText(fechaHoy);
+
         //registro en base de datos local la accion
         Log.e("acciones","antes de entrar al codigo de acciones");
 
@@ -156,15 +173,171 @@ public class IngresoOd extends AppCompatActivity implements AsyncResponse  {
         buscarUltimaVersion();
     }
 
+    public void inicializaciones(){
+//inicializa
+        od=(EditText) findViewById(R.id.ingresoOdd);
+        numero=(TextView) findViewById(R.id.od);
+        modal= new Intent(this, Modal.class);
+        modalVersion = new Intent(this, ModalVersion.class);
+        ods=findViewById(R.id.layoutods);
+        vista= getIntent().getStringExtra("vista");
+        od.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void afterTextChanged(Editable s) {}
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start,
+                                          int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start,
+                                      int before, int count) {
+                if(s.length() != 0) {
+
+                    if (vista.equals("devoluciones")) {
+                        numero.setText(" NO ENTREGA : " + od.getText().toString());
+
+                    } else if (vista.equals("entregas")) {
+                        numero.setText(" ENTREGA : " + od.getText().toString());
+                    } else if (vista.equals("retiros")) {
+                        numero.setText(" RETIRO : " + od.getText().toString());
+
+                    } else if (vista.equals("retornos")) {
+                        numero.setText(" RETORNO : " + od.getText().toString());
+
+                    }
+
+                }
+            }
+        });
+//pongo nombre
+        TextView nombre= (TextView) findViewById(R.id.nombre);
+        prefs = getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
+        String name = prefs.getString("nombre", "");
+        codigo=prefs.getString("codigo", "");
+        nombre.setText(name);
+        //pongo fecha actual en la vista
+        TextView fecha = (TextView) findViewById(R.id.fecha);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy ", Locale.getDefault());
+        Date date = new Date();
+        String fechaHoy = dateFormat.format(date);
+        fecha.setText(fechaHoy);
+//termina
+    }
     @Override
     public void onResume(){
         super.onResume();
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("errorh", 0);
         editor.commit();
-
     }
 
+    public void Escanear(View view){
+        this.abrirScaner();
+    }
+
+    public void abrirScaner(){
+        this.scanner = new ZXingScannerView(this);
+        this.scanner.setResultHandler(this);
+        this.flagCamara = true;
+        setContentView(scanner);
+        scanner.startCamera();
+    }
+    public void cargarLista(){
+        contadorOds=0;
+        /*
+        Button verificar =new Button (this);
+        verificar.setText("VERIFICAR");
+        Drawable d = getResources().getDrawable(R.drawable.action);
+        verificar.setBackground(d);
+        verificar.setPadding(0,5,0,0);
+        verificar.setWidth(40);  */
+        Log.e("here", this.listaOd.toString());
+        this.ods=findViewById(R.id.layoutods);
+
+        // ods.addView(verificar,contadorOds);
+        for(int i=0;i<=listaOd.size()-1;i++){
+            Log.e("here","recorrio"+listaOd.get(i));
+            final TextView textView= new Button(this);
+            textView.setText((i+1)+" - "+listaOd.get(i));
+            textView.setTextAppearance(this, R.style.item);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT,1f);
+            params.gravity = Gravity.LEFT;
+            textView.setLayoutParams(params);
+            textView.setId(i);
+            if(i%2==0){
+                textView.setBackgroundResource(R.drawable.myborder);
+            }else{
+                textView.setBackgroundResource(R.drawable.mybordergray);
+            }
+            ods.addView(textView,contadorOds);
+            contadorOds++;
+        }
+    }
+    @Override
+    public void onBackPressed() {
+        Log.e("back",this.flagCamara+"");
+        if (this.flagCamara) {
+            setContentView(R.layout.ingresood);
+
+        this.inicializaciones();
+        this.cargarLista();
+            this.flagCamara = false;
+
+        } else{
+            Log.e("msj","llego por no");
+            super.onBackPressed();
+        }
+    }
+    @Override
+    public void handleResult(Result result){
+        String dato = result.getText();
+        setContentView(R.layout.ingresood);
+        scanner.stopCamera();
+        this.flagCamara = false;
+        this.inicializaciones();
+        if(dato.equals("") || Double.parseDouble(dato)<70000){
+            modal.putExtra("error", "INGRESA UNA OD VALIDA ");
+            startActivity(modal);
+            MediaPlayer mediaPlayer;
+            mediaPlayer = MediaPlayer.create(this, R.raw.nook);
+            mediaPlayer.start();
+            this.cargarLista();
+        }else if(listaOd.contains(dato) ){
+            modal.putExtra("error", "ESTA OD YA SE ENCUENTRA ALMACENADA");
+            startActivity(modal);
+            MediaPlayer mediaPlayer;
+            mediaPlayer = MediaPlayer.create(this, R.raw.nook);
+            mediaPlayer.start();
+            this.cargarLista();
+        }else{
+            listaOd.add(dato);
+            cargarLista();
+//            TextView textView= new TextView(this);
+//            textView.setText((contadorOds+1)+" - "+dato);
+//            textView.setTextAppearance(this, R.style.item);
+//            textView.setPadding(70,0,0,0);
+//            if(contadorOds%2==0){
+//                textView.setBackgroundResource(R.drawable.myborder);
+//            }else{
+//                textView.setBackgroundResource(R.drawable.mybordergray);
+//            }
+//            ods.addView(textView,contadorOds);
+//            contadorOds++;
+//            od.setText("");
+//
+            MediaPlayer mediaPlayer;
+            mediaPlayer = MediaPlayer.create(this, R.raw.ok);
+            mediaPlayer.start();
+        }
+
+
+
+
+            //aqui otra vez
+
+    }
 
     public void limpiezaPorActualizacion(){
         try {
@@ -208,17 +381,8 @@ public class IngresoOd extends AppCompatActivity implements AsyncResponse  {
             startActivity(modal);
         }else{
             listaOd.add(od.getText().toString());
-            TextView textView= new TextView(this);
-            textView.setText((contadorOds+1)+" - "+od.getText().toString());
-            textView.setTextAppearance(this, R.style.item);
-            textView.setPadding(70,0,0,0);
-            if(contadorOds%2==0){
-                textView.setBackgroundResource(R.drawable.myborder);
-            }else{
-                textView.setBackgroundResource(R.drawable.mybordergray);
-            }
-            ods.addView(textView,contadorOds);
-            contadorOds++;
+            ods.removeAllViews();
+            this.cargarLista();
             od.setText("");
         }
     }

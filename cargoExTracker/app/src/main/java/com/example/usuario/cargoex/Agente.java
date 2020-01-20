@@ -179,6 +179,13 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
             ciudad.setText("Región: "+this.regionActual);
             sizeTns.setText("TNS: "+listaOd.size());
             sizeTotal.setText("TOTAL: "+ this.tnsTotales.length());
+
+            //pongo nombre
+            nombre= (TextView) findViewById(R.id.nombre);
+            prefs = getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
+            String name = prefs.getString("nombre", "");
+            nombre.setText(name);
+
         } else{
                 super.onBackPressed();
             }
@@ -282,6 +289,13 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
             this.ciudad.setText("Región: "+this.regionActual);
             this.sizeTns.setText("TNS: "+listaOd.size());
             this.sizeTotal.setText("TOTAL: "+ this.tnsTotales.length());
+
+            //pongo nombre
+            nombre= (TextView) findViewById(R.id.nombre);
+            prefs = getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
+            String name = prefs.getString("nombre", "");
+            nombre.setText(name);
+
             this.cargarLista();
             cargando.stop();
             imageCharge.setVisibility(View.INVISIBLE);
@@ -318,6 +332,13 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
             this.ciudad.setText("Región: "+this.regionActual);
             this.sizeTns.setText("TNS: "+listaOd.size());
             this.sizeTotal.setText("TOTAL: "+ this.tnsTotales.length());
+
+            //pongo nombre
+            nombre= (TextView) findViewById(R.id.nombre);
+            prefs = getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
+            String name = prefs.getString("nombre", "");
+            nombre.setText(name);
+
             cargando.stop();
             imageCharge.setVisibility(View.INVISIBLE);
             MediaPlayer mediaPlayer;
@@ -336,6 +357,13 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
             this.sizeTns.setText("TNS: "+listaOd.size());
             this.sizeTotal.setText("TOTAL: "+ this.tnsTotales.length());
             this.cargarLista();
+
+            //pongo nombre
+            nombre= (TextView) findViewById(R.id.nombre);
+            prefs = getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
+            String name = prefs.getString("nombre", "");
+            nombre.setText(name);
+
             cargando.stop();
             imageCharge.setVisibility(View.INVISIBLE);
             modal.putExtra("error", "EL TN PICKEADO NO CORRESPONDE ALA REGION");
