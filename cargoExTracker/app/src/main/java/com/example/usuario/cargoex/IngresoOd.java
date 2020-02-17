@@ -297,7 +297,7 @@ public class IngresoOd extends AppCompatActivity implements AsyncResponse,ZXingS
         scanner.stopCamera();
         this.flagCamara = false;
         this.inicializaciones();
-        if(dato.equals("") || Double.parseDouble(dato)<70000){
+        if(dato.equals("") ){
             modal.putExtra("error", "INGRESA UNA OD VALIDA ");
             startActivity(modal);
             MediaPlayer mediaPlayer;
@@ -314,19 +314,6 @@ public class IngresoOd extends AppCompatActivity implements AsyncResponse,ZXingS
         }else{
             listaOd.add(dato);
             cargarLista();
-//            TextView textView= new TextView(this);
-//            textView.setText((contadorOds+1)+" - "+dato);
-//            textView.setTextAppearance(this, R.style.item);
-//            textView.setPadding(70,0,0,0);
-//            if(contadorOds%2==0){
-//                textView.setBackgroundResource(R.drawable.myborder);
-//            }else{
-//                textView.setBackgroundResource(R.drawable.mybordergray);
-//            }
-//            ods.addView(textView,contadorOds);
-//            contadorOds++;
-//            od.setText("");
-//
             MediaPlayer mediaPlayer;
             mediaPlayer = MediaPlayer.create(this, R.raw.ok);
             mediaPlayer.start();

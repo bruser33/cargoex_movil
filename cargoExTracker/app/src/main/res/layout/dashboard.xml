@@ -218,7 +218,7 @@
             android:background="@drawable/dashblackbutton"
             android:elevation="60dp"
             android:fontFamily="@font/titillium_web"
-            android:text="RETIRO AGENTE"
+            android:text="RECEPCION AGENTE"
             android:onClick="goAgentes"
             android:textColor="#000000"
             android:textSize="15sp"
