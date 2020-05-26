@@ -78,6 +78,8 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
     AnimationDrawable cargando;
     boolean cargado = false;
     boolean flagCamara = false;
+    String dato = "";
+    String bucarPorTn = "false";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -243,24 +245,25 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
      fecha.setText(fechaHoy);
 
      if(listaOd.contains(dato) ){
-            modal.putExtra("error", "ESTA OD YA SE ENCUENTRA ALMACENADA");
+            modal.putExtra("error", "ESTA OD O TN YA SE ENCUENTRA ALMACENADA");
             startActivity(modal);
         }else{
 
          this.tnActual=dato;
          pickingAgente tn = new pickingAgente();
          tn.delegate = (AsyncResponse) this;
-         tn.execute(dato);
+         tn.execute(dato,this.bucarPorTn);
         }
     }
     public boolean isHere(String dato){
         for(int i =0;i<this.tnsTotales.length();i++){
             try {
                 double tnAux = Double.parseDouble(this.tnsTotales.getJSONObject(i).getString("TN"));
+                double odAux = Double.parseDouble(this.tnsTotales.getJSONObject(i).getString("OD_PAPEL"));
                 double tnAux2 = Double.parseDouble(dato);
                  Log.e("here", tnAux+"");
                  Log.e("here", tnAux2+"" );
-                if(tnAux==tnAux2){
+                if(tnAux==tnAux2 || tnAux2==odAux){
                     Log.e("here", "llego igualdad");
                     return true;
 
@@ -274,15 +277,20 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
         }
         return false;
     }
-    public void validate (View v){
-        this.ods.removeAllViews();
+    public void validates (View v){
+        dato = this.ingredoOd.getText().toString();
+        System.out.println("dato es aqui "+dato);
+        Log.e("aqui dato es",dato);
+        if(dato.length()>0) {
+
+            this.ods.removeAllViews();
         imageCharge = (ImageView)findViewById(R.id.charge);
         cargando = (AnimationDrawable)imageCharge.getDrawable();
         imageCharge.setVisibility(View.VISIBLE);
         cargando.start();
-        String dato = this.ingredoOd.getText().toString();
+
         if(listaOd.contains(dato) ){
-            modal.putExtra("error", "ESTA OD YA SE ENCUENTRA ALMACENADA");
+            modal.putExtra("error", "ESTA OD O TN YA SE ENCUENTRA ALMACENADA");
             startActivity(modal);
             this.ciudad=(TextView) findViewById(R.id.ciudad);
             this.sizeTns=(TextView) findViewById(R.id.sizetns);
@@ -300,7 +308,9 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
             this.cargarLista();
             cargando.stop();
             imageCharge.setVisibility(View.INVISIBLE);
-        }else if(!cargado){ this.uso(dato);
+        }else if(!cargado){
+            modal2.putExtra("error", "¿Desea hacer la busqueda por TN ? ");
+            startActivityForResult(modal2, 2);
         }else if(isHere(dato)){
             Log.e("here","si esta aqui");
             listaOd.add(dato);
@@ -310,9 +320,11 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
                 try {
                     double tnAux = Double.parseDouble(this.tnsTotales.getJSONObject(i).getString("TN"));
                     double tnAux2 = Double.parseDouble(dato);
+                    double odAux = Double.parseDouble(this.tnsTotales.getJSONObject(i).getString("OD_PAPEL"));
+
                     //  Log.e("cerrar", tnAux);
                     //  Log.e("cerrar",tnActual );
-                    if(tnAux==tnAux2){
+                    if(tnAux==tnAux2  || tnAux2==odAux){
                         this.tns.put(this.tnsTotales.getJSONObject(i));
                         Log.e("cerrar", "llego igualdad");
 
@@ -367,13 +379,17 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
             this.cargarLista();
             cargando.stop();
             imageCharge.setVisibility(View.INVISIBLE);
-            modal.putExtra("error", "EL TN PICKEADO NO CORRESPONDE ALA REGION");
+            modal.putExtra("error", "OD O TN PICKEADO NO CORRESPONDE ALA REGION");
             startActivity(modal);
         }
+    }else{
+        modal.putExtra("error", "DEBES ESCRIBIR UN NUMERO");
+        startActivity(modal);
+    }
     }
     @Override
     public void handleResult(Result result){
-        String dato = result.getText();
+        dato = result.getText();
         setContentView(R.layout.masivos);
         scanner.stopCamera();
         this.flagCamara = false;
@@ -382,7 +398,7 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
         imageCharge.setVisibility(View.VISIBLE);
         cargando.start();
         if(listaOd.contains(dato) ){
-            modal.putExtra("error", "ESTA OD YA SE ENCUENTRA ALMACENADA");
+            modal.putExtra("error", "ESTA OD O TN YA SE ENCUENTRA ALMACENADA");
             startActivity(modal);
             this.ciudad=(TextView) findViewById(R.id.ciudad);
             this.sizeTns=(TextView) findViewById(R.id.sizetns);
@@ -401,7 +417,10 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
             this.cargarLista();
             cargando.stop();
             imageCharge.setVisibility(View.INVISIBLE);
-        }else if(!cargado){ this.uso(dato);
+        }else if(!cargado){
+            modal2.putExtra("error", "¿Desea hacer la busqueda por TN ? ");
+            startActivityForResult(modal2, 2);
+
 
         //aqui nueva camara
             //this.abrirScaner();
@@ -470,7 +489,7 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
 
             cargando.stop();
             imageCharge.setVisibility(View.INVISIBLE);
-            modal.putExtra("error", "EL TN PICKEADO NO CORRESPONDE ALA REGION");
+            modal.putExtra("error", "OD O TN PICKEADO NO CORRESPONDE ALA REGION");
             startActivity(modal);
         }
     }
@@ -531,11 +550,11 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
     }
     public void cerrarManifiesto(View v) {
         Log.e("cerrar",this.tns.toString());
-        if(this.tns.length() == 0){
-            modal.putExtra("error", "NO HAY PICKEADO NINGUN TN");
+        if(this.tns.length() == 0  && this.listaOd.size()==0){
+            modal.putExtra("error", "NO HAY PICKEADO NINGUN TN u OD");
             startActivity(modal);
         }else{
-            modal2.putExtra("error", "¿desea cerrar el manifiesto de bodega con "+this.listaOd.size()+" TN para "+this.regionActual+" ?");
+            modal2.putExtra("error", "¿desea cerrar el manifiesto de bodega con "+this.listaOd.size()+" TN  u OD para "+this.regionActual+" ?");
             startActivityForResult(modal2, 1);
         }
 
@@ -584,9 +603,20 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
             }
         }
         else if (requestCode == 2 ) {
-            if(!versionWeb.equals(versionMovil)){
-                modalVersion.putExtra("error", "DEBES ACTUALIZAR ALA ULTIMA VERSION");
-                startActivityForResult(modalVersion,2);
+
+            if (resultCode == RESULT_OK) {
+            String returnString = data.getStringExtra("status");
+            if (returnString!=null && returnString.equals("true")  ) {
+                this.bucarPorTn = "true";
+                this.uso(dato);
+            }else{
+                this.bucarPorTn = "false";
+                this.uso(dato);
+            }
+            }else{
+                cargando.stop();
+                imageCharge.setVisibility(View.INVISIBLE);
+
             }
         }else if (requestCode == 3 ) {
             listaOd.remove(indiceABorrar);
@@ -603,7 +633,9 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
         } else {
             if(identificadorServicio.equals("1")) {
                 try{
-                JSONObject jsonObject = new JSONObject(output);
+                    Log.e("output log es", output);
+
+                    JSONObject jsonObject = new JSONObject(output);
                     if (jsonObject.getString("success").compareTo("true") == 0 ) {
                         MediaPlayer mediaPlayer;
                         mediaPlayer = MediaPlayer.create(this, R.raw.ok);
@@ -616,9 +648,9 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
                         this.ciudad=(TextView) findViewById(R.id.ciudad);
                         this.sizeTns=(TextView) findViewById(R.id.sizetns);
                         this.sizeTotal=(TextView) findViewById(R.id.sizetotal);
-                        this.ciudad.setText("Región: "+objeto.getString("CIUDAD_DESTINO"));
-                        Log.e("here","destino"+objeto.getString("CIUDAD_DESTINO"));
-                        this.regionActual=objeto.getString("CIUDAD_DESTINO");
+                        this.ciudad.setText("Región: "+objeto.getString("CUIDAD_PADRE"));
+                        Log.e("here","destino"+objeto.getString("CUIDAD_PADRE"));
+                        this.regionActual=objeto.getString("CUIDAD_PADRE");
                         listaOd.add(tnActual);
                         this.tnsTotales = datos;
                         this.sizeTns.setText("TNS: "+listaOd.size());
@@ -651,7 +683,7 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
                             this.cargado=false;
                             mediaPlayer = MediaPlayer.create(this, R.raw.nook);
                             mediaPlayer.start();
-                            modal.putExtra("error", "TNS VACIOS");
+                            modal.putExtra("error", "ODS O TNS VACIOS");
                             startActivity(modal);
                             cargando.stop();
                             imageCharge.setVisibility(View.INVISIBLE);
@@ -660,7 +692,7 @@ public class Agente extends AppCompatActivity implements AsyncResponse,ZXingScan
                         MediaPlayer mediaPlayer;
                         mediaPlayer = MediaPlayer.create(this, R.raw.nook);
                         mediaPlayer.start();
-                        modal.putExtra("error", "ESTE TN NO ESTA REGISTRADO EN MANIFIESTO DE BODEGA");
+                        modal.putExtra("error", "ESTE OD O TN NO ESTA REGISTRADO EN MANIFIESTO DE BODEGA");
                         startActivity(modal);
                         cargando.stop();
                         imageCharge.setVisibility(View.INVISIBLE);
@@ -703,9 +735,15 @@ class pickingAgente extends AsyncTask<String, Integer, String> {
             Log.e("Version","PASO POR AQUI2 ");
             try {
                 JSONObject json = new JSONObject();
-                json.put("TN", params[0]);
-
-
+                if( params[1].equals("true")){
+                    json.put("TN", params[0]);
+                    json.put("OD", "0");
+                    json.put("TIPO_MANIFIESTO", "TN");
+                }else{
+                    json.put("TN", "0");
+                    json.put("OD", params[0]);
+                    json.put("TIPO_MANIFIESTO", "OD");
+                }
                 url = new URL(sql);
                 conn = (HttpURLConnection) url.openConnection();
                 Log.e("Version","PASO POR AQUI3 ");

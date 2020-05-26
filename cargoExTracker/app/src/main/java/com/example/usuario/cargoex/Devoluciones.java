@@ -187,7 +187,6 @@ public class Devoluciones extends AppCompatActivity {
             camera1.setVisibility(View.INVISIBLE);
             camera2.setVisibility(View.INVISIBLE);
             camera3.setVisibility(View.INVISIBLE);
-
         }
 
         //le pongo el color en el spinner
@@ -424,15 +423,23 @@ public class Devoluciones extends AppCompatActivity {
                 values.put("fechaIngreso", fecha2);
                 values.put("fechaEnvio", "null");
                 values.put("status", "null");
-                if(!vista.equals("exitoso")){
-                    values.put("codEstado", getIdMotivo(problemas[index]));  //motivos del excel
+                if(vista.equals("devolucion")){
+                    values.put("codEstado", getIdMotivo(problemas[index]));
+                    values.put("tipoCertificacion", "devolucion");//motivos del excel
+                }else if(vista.equals("exitoso")) {
+                    values.put("codEstado", "99");
+                    values.put("tipoCertificacion", "retiro");
+                    //motivos del excel
                 }else if(vista.equals("retorno")) {
-                    values.put("codEstado", "25");  //motivos del excel
+                    values.put("codEstado", "25");
+                    values.put("tipoCertificacion", "retiro");
+                    //motivos del excel
                 }
                 else{
-                    values.put("codEstado", "99");  //motivos del excel
+                    values.put("codEstado", "24");  //motivos del excel
+                    values.put("tipoCertificacion", "retiro");
                 }
-                values.put("tipoCertificacion", "retiro"); //biometria o normal
+                 //biometria o normal
                 if (lista.size() > 1) {
                     values.put("multientrega", "TRUE");
                 } else {

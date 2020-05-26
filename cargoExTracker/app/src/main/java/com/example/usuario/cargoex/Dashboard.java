@@ -80,7 +80,6 @@ public class Dashboard extends AppCompatActivity implements AsyncResponse {
     Intent modal,modalGestiones;
     String codigo, od,fechaGestion,numerood,base,path;
     int sincro;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,9 +87,7 @@ public class Dashboard extends AppCompatActivity implements AsyncResponse {
         nombre = (TextView) findViewById(R.id.nombre);
         modal = new Intent(this, Modal.class);
         modalGestiones = new Intent(this, ModalGestiones.class);
-
         conn = new SqliteCertificaciones(this, "bd_certificaciones", null, R.string.versionDB);
-
         prefs = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
         String name = prefs.getString("nombre", "");
         codigo = prefs.getString("codigo", "");
@@ -155,10 +152,7 @@ public class Dashboard extends AppCompatActivity implements AsyncResponse {
         if (!path.equals("")) {
             Log.e("fotohistorialc","sisas entro");
             comprimir(path);
-
-
             SQLiteDatabase db = conn.getWritableDatabase();
-
             String[] parametros = {numerood, fechaGestion};
             ContentValues values = new ContentValues();
             values.put("foto1", base);
@@ -244,7 +238,7 @@ public class Dashboard extends AppCompatActivity implements AsyncResponse {
         SQLiteDatabase db = conn.getWritableDatabase();
         String[] parametros = {"null", date};
         String[] parametros2 = {"null"};
-        db.delete("certificaciones", "status != ? and dia = ?", parametros);
+        db.delete("certificaciones", "status != ? and dia <= ?", parametros);
         db.delete("acciones", "fechaEnvio != ? ", parametros2);
         db.delete("acciones", "latitud == ? ", parametros2);
             db.close();
@@ -811,19 +805,19 @@ public class Dashboard extends AppCompatActivity implements AsyncResponse {
         Log.e("state", "Va a consultar");
         try {
             Cursor cursor = db.rawQuery("SELECT * FROM certificaciones WHERE codChofer = " + codigo, null);
-     //       Log.e("state", "tamaño de sincronizacion es " + cursor.getCount());
+           Log.e("state", "tamaño de sincronizacion es " + cursor.getCount());
             while (cursor.moveToNext()) {
                 String[] fechaFormat = cursor.getString(12).split(" ");
+                Log.e("state", "od es" + cursor.getString(6) + "con status" + cursor.getString(13)+"tipo "+ cursor.getString(16));
                 Log.e("cursor", cursor.toString());
                 if (cursor.getString(13).equals("null")) {
                     faltaTransmitir++;
-                    Log.e("state", "od es" + cursor.getString(6) + "con status" + cursor.getString(13));
                 }
-                if ( cursor.getString(16).equals("entregas") && fecha3.equals(fechaFormat[0])) {
+                if ( cursor.getString(16).equals("normal") && fecha3.equals(fechaFormat[0])) {
                     entregas++;
                 } else if (cursor.getString(16).equals("retiro") && fecha3.equals(fechaFormat[0])) {
                     retirados++;
-                } else  {
+                } else if (cursor.getString(16).equals("devolucion") && fecha3.equals(fechaFormat[0]))  {
                     devoluciones++;
                 }
             }

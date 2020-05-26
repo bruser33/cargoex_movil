@@ -246,7 +246,7 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
      String fechaHoy = dateFormat.format(date);
      fecha.setText(fechaHoy);
      if(listaOd.contains(dato) ){
-            modal.putExtra("error", "ESTA OD YA SE ENCUENTRA ALMACENADA");
+            modal.putExtra("error", "ESTA OD O TN YA SE ENCUENTRA ALMACENADA");
             startActivity(modal);
         }else{
          this.tnActual=dato;
@@ -284,7 +284,7 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
         Log.e("dato",dato);
         Log.e("lista",this.listaOd.toString());
         if(listaOd.contains(dato) ){
-            modal.putExtra("error", "ESTA OD YA SE ENCUENTRA ALMACENADA");
+            modal.putExtra("error", "ESTA OD O TN YA SE ENCUENTRA ALMACENADA");
             startActivity(modal);
             this.ciudad=(TextView) findViewById(R.id.ciudad);
             this.sizeTns=(TextView) findViewById(R.id.sizetns);
@@ -373,107 +373,114 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
             this.cargarLista();
             cargando.stop();
             imageCharge.setVisibility(View.INVISIBLE);
-            modal.putExtra("error", "EL TN PICKEADO NO CORRESPONDE ALA REGION");
+            modal.putExtra("error", "OD O TN PICKEADO NO CORRESPONDE ALA REGION");
             startActivity(modal);
         }
     }
     @Override
     public void handleResult(Result result){
         String dato = result.getText();
-        setContentView(R.layout.masivos);
-        scanner.stopCamera();
-        this.flagCamara = false;
-        imageCharge = (ImageView)findViewById(R.id.charge);
-        cargando = (AnimationDrawable)imageCharge.getDrawable();
-        imageCharge.setVisibility(View.VISIBLE);
-        cargando.start();
-        if(listaOd.contains(dato) ){
-            modal.putExtra("error", "ESTA OD YA SE ENCUENTRA ALMACENADA");
-            startActivity(modal);
-            this.ciudad=(TextView) findViewById(R.id.ciudad);
-            this.sizeTns=(TextView) findViewById(R.id.sizetns);
-            this.sizeTotal=(TextView) findViewById(R.id.sizetotal);
-            this.ciudad.setText("Región: "+this.regionActual);
-            this.sizeTns.setText("TNS: "+listaOd.size());
-            this.sizeTotal.setText("TOTAL: "+ this.tnsTotales.length());
-            this.ingredoOd = (EditText)findViewById(R.id.odText);
-            //pongo nombre
-            nombre= (TextView) findViewById(R.id.nombre);
-            prefs = getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
-            String name = prefs.getString("nombre", "");
-            nombre.setText(name);
+        if(dato!="") {
 
-            this.cargarLista();
-            cargando.stop();
-            imageCharge.setVisibility(View.INVISIBLE);
-        }else if(!cargado){ this.uso(dato);
-        }else if(isHere(dato)){
-            Log.e("here","si esta aqui");
-            listaOd.add(dato);
-            this.sizeTns.setText("TNS: "+listaOd.size());
-            this.cargarLista();
-            for(int i =0;i<this.tnsTotales.length();i++){
-                try {
-                    double tnAux = Double.parseDouble(this.tnsTotales.getJSONObject(i).getString("TN"));
-                    double tnAux2 = Double.parseDouble(dato);
-                    //  Log.e("cerrar", tnAux);
-                    //  Log.e("cerrar",tnActual );
-                    if(tnAux==tnAux2){
-                        this.tns.put(this.tnsTotales.getJSONObject(i));
-                        Log.e("cerrar", "llego igualdad");
+            setContentView(R.layout.masivos);
+            scanner.stopCamera();
+            this.flagCamara = false;
+            imageCharge = (ImageView) findViewById(R.id.charge);
+            cargando = (AnimationDrawable) imageCharge.getDrawable();
+            imageCharge.setVisibility(View.VISIBLE);
+            cargando.start();
+            if (listaOd.contains(dato)) {
+                modal.putExtra("error", "ESTA OD O TN YA SE ENCUENTRA ALMACENADA");
+                startActivity(modal);
+                this.ciudad = (TextView) findViewById(R.id.ciudad);
+                this.sizeTns = (TextView) findViewById(R.id.sizetns);
+                this.sizeTotal = (TextView) findViewById(R.id.sizetotal);
+                this.ciudad.setText("Región: " + this.regionActual);
+                this.sizeTns.setText("TNS: " + listaOd.size());
+                this.sizeTotal.setText("TOTAL: " + this.tnsTotales.length());
+                this.ingredoOd = (EditText) findViewById(R.id.odText);
+                //pongo nombre
+                nombre = (TextView) findViewById(R.id.nombre);
+                prefs = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+                String name = prefs.getString("nombre", "");
+                nombre.setText(name);
 
-                    }else{
-                        Log.e("cerrar","no son iguales"+tnAux+" "+tnAux2);
+                this.cargarLista();
+                cargando.stop();
+                imageCharge.setVisibility(View.INVISIBLE);
+            } else if (!cargado) {
+                this.uso(dato);
+            } else if (isHere(dato)) {
+                Log.e("here", "si esta aqui");
+                listaOd.add(dato);
+                this.sizeTns.setText("TNS: " + listaOd.size());
+                this.cargarLista();
+                for (int i = 0; i < this.tnsTotales.length(); i++) {
+                    try {
+                        double tnAux = Double.parseDouble(this.tnsTotales.getJSONObject(i).getString("TN"));
+                        double tnAux2 = Double.parseDouble(dato);
+                        //  Log.e("cerrar", tnAux);
+                        //  Log.e("cerrar",tnActual );
+                        if (tnAux == tnAux2) {
+                            this.tns.put(this.tnsTotales.getJSONObject(i));
+                            Log.e("cerrar", "llego igualdad");
+
+                        } else {
+                            Log.e("cerrar", "no son iguales" + tnAux + " " + tnAux2);
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
+                this.ciudad = (TextView) findViewById(R.id.ciudad);
+                this.sizeTns = (TextView) findViewById(R.id.sizetns);
+                this.sizeTotal = (TextView) findViewById(R.id.sizetotal);
+                this.ciudad.setText("Región: " + this.regionActual);
+                this.sizeTns.setText("TNS: " + listaOd.size());
+                this.sizeTotal.setText("TOTAL: " + this.tnsTotales.length());
+                this.ingredoOd = (EditText) findViewById(R.id.odText);
+
+                //pongo nombre
+                nombre = (TextView) findViewById(R.id.nombre);
+                prefs = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+                String name = prefs.getString("nombre", "");
+                nombre.setText(name);
+
+
+                cargando.stop();
+                imageCharge.setVisibility(View.INVISIBLE);
+                MediaPlayer mediaPlayer;
+                mediaPlayer = MediaPlayer.create(this, R.raw.ok);
+                mediaPlayer.start();
+                //aqui otra vez
+            } else {
+                Log.e("here", "no esta aqui");
+                MediaPlayer mediaPlayer;
+                mediaPlayer = MediaPlayer.create(this, R.raw.nook);
+                mediaPlayer.start();
+                this.ciudad = (TextView) findViewById(R.id.ciudad);
+                this.sizeTns = (TextView) findViewById(R.id.sizetns);
+                this.sizeTotal = (TextView) findViewById(R.id.sizetotal);
+                this.ciudad.setText("Región: " + this.regionActual);
+                this.sizeTns.setText("TNS: " + listaOd.size());
+                this.sizeTotal.setText("TOTAL: " + this.tnsTotales.length());
+                this.ingredoOd = (EditText) findViewById(R.id.odText);
+
+                //pongo nombre
+                nombre = (TextView) findViewById(R.id.nombre);
+                prefs = getSharedPreferences("Preferencias", Context.MODE_PRIVATE);
+                String name = prefs.getString("nombre", "");
+                nombre.setText(name);
+
+                this.cargarLista();
+                cargando.stop();
+                imageCharge.setVisibility(View.INVISIBLE);
+                modal.putExtra("error", "OD O TN PICKEADO NO CORRESPONDE ALA REGION");
+                startActivity(modal);
             }
-            this.ciudad=(TextView) findViewById(R.id.ciudad);
-            this.sizeTns=(TextView) findViewById(R.id.sizetns);
-            this.sizeTotal=(TextView) findViewById(R.id.sizetotal);
-            this.ciudad.setText("Región: "+this.regionActual);
-            this.sizeTns.setText("TNS: "+listaOd.size());
-            this.sizeTotal.setText("TOTAL: "+ this.tnsTotales.length());
-            this.ingredoOd = (EditText)findViewById(R.id.odText);
-
-            //pongo nombre
-            nombre= (TextView) findViewById(R.id.nombre);
-            prefs = getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
-            String name = prefs.getString("nombre", "");
-            nombre.setText(name);
-
-
-            cargando.stop();
-            imageCharge.setVisibility(View.INVISIBLE);
-            MediaPlayer mediaPlayer;
-            mediaPlayer = MediaPlayer.create(this, R.raw.ok);
-            mediaPlayer.start();
-            //aqui otra vez
         }else{
-            Log.e("here","no esta aqui");
-            MediaPlayer mediaPlayer;
-            mediaPlayer = MediaPlayer.create(this, R.raw.nook);
-            mediaPlayer.start();
-            this.ciudad=(TextView) findViewById(R.id.ciudad);
-            this.sizeTns=(TextView) findViewById(R.id.sizetns);
-            this.sizeTotal=(TextView) findViewById(R.id.sizetotal);
-            this.ciudad.setText("Región: "+this.regionActual);
-            this.sizeTns.setText("TNS: "+listaOd.size());
-            this.sizeTotal.setText("TOTAL: "+ this.tnsTotales.length());
-            this.ingredoOd = (EditText)findViewById(R.id.odText);
-
-            //pongo nombre
-            nombre= (TextView) findViewById(R.id.nombre);
-            prefs = getSharedPreferences("Preferencias",Context.MODE_PRIVATE);
-            String name = prefs.getString("nombre", "");
-            nombre.setText(name);
-
-            this.cargarLista();
-            cargando.stop();
-            imageCharge.setVisibility(View.INVISIBLE);
-            modal.putExtra("error", "EL TN PICKEADO NO CORRESPONDE ALA REGION");
+            modal.putExtra("error", "DEBES ESCRIBIR UN NUMERO");
             startActivity(modal);
         }
     }
@@ -534,11 +541,11 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
     }
     public void cerrarManifiesto(View v) {
         Log.e("cerrar",this.tns.toString());
-        if(this.tns.length() == 0){
-            modal.putExtra("error", "NO HAY PICKEADO NINGUN TN");
+        if(this.tns.length() == 0 && this.listaOd.size()==0){
+            modal.putExtra("error", "NO HAY PICKEADO NINGUN TN u OD");
             startActivity(modal);
         }else{
-            modal2.putExtra("error", "¿desea cerrar el manifiesto de bodega con "+this.listaOd.size()+" TN para "+this.regionActual+" ?");
+            modal2.putExtra("error", "¿desea cerrar el manifiesto de bodega con "+this.listaOd.size()+" TN u OD para "+this.regionActual+" ?");
             startActivityForResult(modal2, 1);
         }
 
@@ -604,6 +611,7 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
         } else {
             if(identificadorServicio.equals("1")) {
                 try{
+                    Log.e("output log es", output);
                 JSONObject jsonObject = new JSONObject(output);
                     if (jsonObject.getString("success").compareTo("true") == 0 ) {
                         MediaPlayer mediaPlayer;
@@ -614,9 +622,9 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
                         this.ciudad=(TextView) findViewById(R.id.ciudad);
                         this.sizeTns=(TextView) findViewById(R.id.sizetns);
                         this.sizeTotal=(TextView) findViewById(R.id.sizetotal);
-                        this.ciudad.setText("Región: "+objeto.getString("CIUDAD_DESTINO"));
+                        this.ciudad.setText("Región: "+objeto.getString("CUIDAD_PADRE"));
                         Log.e("here","destino"+objeto.getString("CIUDAD_DESTINO"));
-                        this.regionActual=objeto.getString("CIUDAD_DESTINO");
+                        this.regionActual=objeto.getString("CUIDAD_PADRE");
                         listaOd.add(tnActual);
                         Log.e("actual",tnActual);
                         this.tnsTotales = datos;
@@ -652,7 +660,7 @@ public class Masivos extends AppCompatActivity implements AsyncResponse,ZXingSca
                         MediaPlayer mediaPlayer;
                         mediaPlayer = MediaPlayer.create(this, R.raw.nook);
                         mediaPlayer.start();
-                        modal.putExtra("error", "ESTE TN NO ESTA REGISTRADO EN MANIFIESTO DE ENTRADA");
+                        modal.putExtra("error", "ESTE TN U OD NO ESTA REGISTRADO EN MANIFIESTO DE ENTRADA");
                         startActivity(modal);
                         cargando.stop();
                         imageCharge.setVisibility(View.INVISIBLE);
@@ -697,7 +705,7 @@ class SimpleTaskAndenTn extends AsyncTask<String, Integer, String> {
                 JSONObject json = new JSONObject();
                 json.put("TN", params[0]);
 
-
+                Log.e("a",json.toString());
                 url = new URL(sql);
                 conn = (HttpURLConnection) url.openConnection();
                 Log.e("Version","PASO POR AQUI3 ");
@@ -722,6 +730,8 @@ class SimpleTaskAndenTn extends AsyncTask<String, Integer, String> {
                     }
                     respuesta = sb.toString();
                     br.close();
+                    Log.e("service",respuesta);
+
                     return respuesta;
                 } else {
                     Log.e("version", "no entro al ok");
@@ -819,6 +829,7 @@ class EnvioPicking extends AsyncTask<Object, Integer, String> {
                     }
                     respuesta = sb.toString();
                     br.close();
+                    Log.e("service",respuesta);
                     return respuesta;
                 } else {
                     Log.e("version", "no entro al ok");
