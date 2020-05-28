@@ -356,15 +356,18 @@ public class Login extends AppCompatActivity implements AsyncResponse {
         for (int j = 1; j < auxMaximo; j++) {
             Log.e("state","dato es "+ rut[j]+"llegue i "+j);
             if (!pruebaInt(rut[j])) {
+                Log.e("login","va a retornar false por numero no entero ");
                 return false;
             }else if(j >=10){
+                Log.e("login","va a retornar false por else j >10");
                 return false;
             }
         }
         if(rut.length-1<=8){
             return false;
         }
-        return true;
+        Log.e("login","va a retornar true");
+    return true;
     }
     private boolean isNetDisponible() {
 
