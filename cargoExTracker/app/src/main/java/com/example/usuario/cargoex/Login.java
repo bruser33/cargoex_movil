@@ -363,9 +363,9 @@ public class Login extends AppCompatActivity implements AsyncResponse {
                 return false;
             }
         }
-        if(rut.length-1<=8){
-            return false;
-        }
+//        if(rut.length-1<=8){
+//            return false;
+//        }
         Log.e("login","va a retornar true");
     return true;
     }

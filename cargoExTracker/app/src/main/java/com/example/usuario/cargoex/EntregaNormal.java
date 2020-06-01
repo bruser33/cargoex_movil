@@ -300,14 +300,18 @@ public class EntregaNormal extends AppCompatActivity {
         return result;
     }
     public void ClickCamera1(View View) {
+//        File files = new File(Environment.getExternalStorageDirectory().getPath(),"Cargoex");
+//        if (!files.exists()) {
+//            files.mkdirs();
+//        }
+//        extStorageDirectory1 = Environment.getExternalStorageDirectory().getPath() +"/Cargoex";
+//        File file = new File(extStorageDirectory1, numero + "1.jpg");
+//        Uri mImageUri = Uri.fromFile(file);
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder(); StrictMode.setVmPolicy(builder.build());
-        File files = new File(Environment.getExternalStorageDirectory().getPath(),"Cargoex");
-        if (!files.exists()) {
-            files.mkdirs();
-        }
-        extStorageDirectory1 = Environment.getExternalStorageDirectory().getPath() +"/Cargoex";
-        File file = new File(extStorageDirectory1, numero + "1.jpg");
-        Uri mImageUri = Uri.fromFile(file);
+        extStorageDirectory1 = Environment.getExternalStorageDirectory().getPath() ;
+        File files = new File(extStorageDirectory1,numero + "1.jpg");
+        Uri mImageUri = Uri.fromFile(files);
+
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, mImageUri);
         f1=true;
@@ -316,11 +320,11 @@ public class EntregaNormal extends AppCompatActivity {
     public void ClickCamera2(View View) {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder(); StrictMode.setVmPolicy(builder.build());
 
-        File files = new File(Environment.getExternalStorageDirectory().getPath(),"Cargoex");
-        if (!files.exists()) {
-            files.mkdirs();
-        }
-        extStorageDirectory2 = Environment.getExternalStorageDirectory().getPath()+"/Cargoex" ;
+//        File files = new File(Environment.getExternalStorageDirectory().getPath(),"Cargoex");
+//        if (!files.exists()) {
+//            files.mkdirs();
+//        }
+        extStorageDirectory2 = Environment.getExternalStorageDirectory().getPath();
         File file = new File(extStorageDirectory2, numero + "2.jpg");
         Uri mImageUri = Uri.fromFile(file);
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -330,11 +334,11 @@ public class EntregaNormal extends AppCompatActivity {
     }
     public void ClickCamera3(View View) {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder(); StrictMode.setVmPolicy(builder.build());
-        File files = new File(Environment.getExternalStorageDirectory().getPath(),"Cargoex");
-        if (!files.exists()) {
-            files.mkdirs();
-        }
-        extStorageDirectory3 = Environment.getExternalStorageDirectory().getPath() +"/Cargoex" ;
+//        File files = new File(Environment.getExternalStorageDirectory().getPath(),"Cargoex");
+//        if (!files.exists()) {
+//            files.mkdirs();
+//        }
+        extStorageDirectory3 = Environment.getExternalStorageDirectory().getPath();
         File file = new File(extStorageDirectory3, numero + "3.jpg");
         Uri mImageUri = Uri.fromFile(file);
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
