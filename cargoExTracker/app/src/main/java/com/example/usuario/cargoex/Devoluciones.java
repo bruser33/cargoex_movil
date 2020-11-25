@@ -631,11 +631,11 @@ public class Devoluciones extends AppCompatActivity {
     public void ClickCamera1(View View) {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
-        File files = new File(Environment.getExternalStorageDirectory().getPath(), "Cargoex");
-        if (!files.exists()) {
-            files.mkdirs();
-        }
-        extStorageDirectory1 = Environment.getExternalStorageDirectory().getPath() + "/Cargoex";
+//        File files = new File(Environment.getExternalStorageDirectory().getPath(), "Cargoex");
+//        if (!files.exists()) {
+//            files.mkdirs();
+//        }
+        extStorageDirectory1 = Environment.getExternalStorageDirectory().getPath() ;
         File file = new File(extStorageDirectory1, numero + "1.jpg");
         Uri mImageUri = Uri.fromFile(file);
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
