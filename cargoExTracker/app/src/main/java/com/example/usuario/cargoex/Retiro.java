@@ -268,60 +268,7 @@ public class Retiro extends AppCompatActivity {
         }
         return "000";
     }
-    public boolean ultimaPosicionAccion(){
-        String codigo = prefs.getString("codigo", "");
-        Log.e("ULTIMA ACCION","llego al boton ");
-        SQLiteDatabase db = conn.getReadableDatabase();
-        Log.e("ULTIMA ACCION", "Va a consultar acciones");
-        try {
-            Cursor cursor = db.rawQuery("SELECT * FROM acciones WHERE id = " + codigo, null);
-            Log.e("ULTIMA ACCION", "tamaño de las acciones es " + cursor.getCount());
-            cursor.moveToLast();
-            if(cursor.getString(2).equals("")|| cursor.getString(2).equals(null)||cursor.getString(2).equals("null")){
-                cursor.close();
-                db.close();
-                return false;
-            }else{
-                Log.e("ULTIMA ACCION",cursor.getString(0)+" ---"+cursor.getString(1)+"---"+cursor.getString(2)+"---"+cursor.getString(3)+"---"+cursor.getString(4)+"---"+cursor.getString(5));
-                latitud=cursor.getString(2);
-                longitud=cursor.getString(3);
-                cursor.close();
-                db.close();
-                return true;
-            }
-        } catch (Exception e) {
-            Log.e("ULTIMA ACCION","no encontro al consultar");
-            db.close();
-            return false;
-        }
-    }
-    public boolean ultimaPosicionGestion(){
-        String codigo = prefs.getString("codigo", "");
-        //  Log.e("ULTIMA ACCION","llego al boton ");
-        SQLiteDatabase db = conn.getReadableDatabase();
-        //   Log.e("ULTIMA ACCION", "Va a consultar acciones");
-        try {
-            Cursor cursor = db.rawQuery("SELECT * FROM certificaciones WHERE codChofer = " + codigo, null);
-            //     Log.e("ULTIMA ACCION", "tamaño de las acciones es " + cursor.getCount());
-            cursor.moveToLast();
-            if(cursor.getString(4).equals("")|| cursor.getString(4).equals(null)||cursor.getString(4).equals("null")){
-                cursor.close();
-                db.close();
-                return false;
-            }else{
-                Log.e("ULTIMA ACCION",cursor.getString(0)+" ---"+cursor.getString(1)+"---"+cursor.getString(2)+"---"+cursor.getString(3)+"---"+cursor.getString(4)+"---"+cursor.getString(5));
-                latitud=cursor.getString(4);
-                longitud=cursor.getString(5);
-                cursor.close();
-                db.close();
-                return true;
-            }
-        } catch (Exception e) {
-            Log.e("ULTIMA ACCION","no encontro al consultar");
-            db.close();
-            return false;
-        }
-    }
+
     public static Bitmap mark(Bitmap src, String watermark, int alpha, int size, boolean underline) {
         int w = src.getWidth();
         int h = src.getHeight();
@@ -476,7 +423,7 @@ public class Retiro extends AppCompatActivity {
     public void base64(String path, int id) {
         Bitmap bm = BitmapFactory.decodeFile(path);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+        bm.compress(Bitmap.CompressFormat.JPEG, 50, baos); //bm is the bitmap object
         byte[] b = baos.toByteArray();
         String encodedString = Base64.encodeToString(b, Base64.NO_WRAP);
         if (id == 1) {
@@ -498,8 +445,8 @@ public class Retiro extends AppCompatActivity {
     }
 
     public void comprimir(String path, int id) {
-        String pathImg = compressImage(path);
-        Bitmap b = BitmapFactory.decodeFile(pathImg);
+      //  String pathImg = compressImage(path);
+        Bitmap b = BitmapFactory.decodeFile(path);
         File file = new File(path);
         String []fechaFormat =fechaGestion.split(" ");
         b=mark(b,lista.get(0)+" - "+fechaFormat[0]+" - RETIRO ",130,20,false);
@@ -615,7 +562,7 @@ public class Retiro extends AppCompatActivity {
         String filename = getFilename();
         try {
             out = new FileOutputStream(filename);
-            scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
+            scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -722,13 +669,13 @@ public class Retiro extends AppCompatActivity {
             String[] fechaFormat = fecha2.split(" ");
             if(latitud==null || longitud==null ||latitud.equals("")||longitud.equals("")){
                 preciso=false;
-                if(!ultimaPosicionAccion()){
+             /*/   if(!ultimaPosicionAccion()){
                     if(!ultimaPosicionGestion()&& fallas >=2){
                         modal.putExtra("error", "TIENES GPS IMPRECISO POR MALA SEÑAL DE INTERNET, FAVOR TOMA AGREGA UNA FOTO DEL DOMICILIO PARA COMPROBAR TU LLEGADA AL LUGAR");
                         startActivity(modal);
                         return;
                     }
-                }
+                } */
             }
             String android_id = Build.SERIAL;
             String net = "";

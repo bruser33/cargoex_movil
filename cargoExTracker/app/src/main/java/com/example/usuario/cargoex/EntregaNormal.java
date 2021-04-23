@@ -36,11 +36,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.cargo.usuario.cargoex.R;
 import com.example.usuario.cargoex.util.Modal;
 import com.example.usuario.cargoex.util.Modal2;
 import com.example.usuario.cargoex.util.SqliteCertificaciones;
-import com.example.usuario.cargoex.util.SqliteHelper;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -349,7 +349,7 @@ public class EntregaNormal extends AppCompatActivity {
     public void base64(String path, int id){
         Bitmap bm = BitmapFactory.decodeFile(path);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.JPEG, 100, baos); //bm is the bitmap object
+        bm.compress(Bitmap.CompressFormat.JPEG, 50, baos); //bm is the bitmap object
         byte[] b = baos.toByteArray();
         String encodedString = Base64.encodeToString(b, Base64.NO_WRAP);
         if(id==1){
@@ -366,9 +366,11 @@ public class EntregaNormal extends AppCompatActivity {
         }
 
     }
-    public void comprimir(String path,int id){
-        String pathImg = compressImage(path);
-        Bitmap b = BitmapFactory.decodeFile(pathImg);
+
+    //voy a dejar de compirmir
+    public void comprimir(String path, int id){
+        //   String pathImg = compressImage(path);
+        Bitmap b = BitmapFactory.decodeFile(path);
         File file = new File(path);
         String []fechaFormat =fechaGestion.split(" ");
         b=mark(b,lista.get(0)+" - "+fechaFormat[0]+" - ENTREGA ",130,20,false);
@@ -406,6 +408,8 @@ public class EntregaNormal extends AppCompatActivity {
         int actualWidth = options.outWidth;
         float maxHeight = 816.0f;
         float maxWidth = 612.0f;
+        actualHeight = actualHeight == 0 ? actualHeight + 1 : actualHeight;
+        actualWidth = actualWidth == 0 ? actualWidth + 1 : actualWidth;
         float imgRatio = actualWidth / actualHeight;
         float maxRatio = maxWidth / maxHeight;
 
@@ -484,7 +488,7 @@ public class EntregaNormal extends AppCompatActivity {
         String filename = getFilename();
         try {
             out = new FileOutputStream(filename);
-            scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
+            scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -599,13 +603,14 @@ public class EntregaNormal extends AppCompatActivity {
         }else{
         if(latitud==null || longitud==null ||latitud.equals("")||longitud.equals("")){
             preciso=false;
-            if(!ultimaPosicionAccion()){
+          /*  if(!ultimaPosicionAccion()){
                 if(!ultimaPosicionGestion()&& fallas >=2){
                     modal.putExtra("error", "TIENES GPS IMPRECISO POR MALA SEÑAL DE INTERNET, FAVOR TOMA AGREGA UNA FOTO DEL DOMICILIO PARA COMPROBAR TU LLEGADA AL LUGAR");
                     startActivity(modal);
                     return;
                 }
             }
+*/
         }
         String android_id = Build.SERIAL;
         String net="";
@@ -628,125 +633,79 @@ public class EntregaNormal extends AppCompatActivity {
         }
         SqliteCertificaciones conn2 = new SqliteCertificaciones(this, "bd_certificaciones", null, R.string.versionDB);
         SQLiteDatabase db = conn2.getWritableDatabase();
-        Log.e("multientrega","hara 10 multi entregas");
+            Log.e("trace", "hara 10 multi entregas");
         SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
         Date date2 = new Date();
         String fecha2 = fechaGestion ;
         String []fechaFormat =fecha2.split(" ");
-        Log.e("erorh","error h es "+errorh);
+            Log.e("trace", "error h es " + errorh);
         String comentario= comentarios.getText().toString().replace("(","");
-        comentario= comentario.replace(")","");
+            try {
 
-            for(String s:lista){
-            ContentValues values = new ContentValues();
-            values.put("id", codigo);
-            values.put("codChofer", codigo);
-            values.put("rut", rutCliente.getText().toString()+"-"+dv.getText().toString());
-            values.put("nombreReceptor", nombreCliente.getText().toString());
-            values.put("latitud", latitud);
-            values.put("longitud", longitud);
-            values.put("od", s);
-            values.put("tn", "0");
-            if (errorh==0) {
-                    values.put("nota",comentario);
-            }else{
-                    values.put("nota",comentario+" ("+errorh+")");
+
+                comentario= comentario.replace(")","");
+
+                for(String s:lista){
+                    ContentValues values = new ContentValues();
+                    values.put("id", codigo);
+                    values.put("codChofer", codigo);
+                    values.put("rut", rutCliente.getText().toString()+"-"+dv.getText().toString());
+                    values.put("nombreReceptor", nombreCliente.getText().toString());
+                    values.put("latitud", latitud);
+                    values.put("longitud", longitud);
+                    values.put("od", s);
+                    values.put("tn", "0");
+                    if (errorh==0) {
+                        values.put("nota", comentario);
+                    }else{
+                        values.put("nota", comentario + " (" + errorh + ")");
+                    }
+                    values.put("foto1", base1);
+                    values.put("foto2", base2);
+                    values.put("foto3", base3);
+                    values.put("fechaIngreso", fecha2);
+                    values.put("fechaEnvio", "null");
+                    values.put("status", "null");
+                    values.put("codEstado", "0");
+                    values.put("tipoCertificacion", "normal");
+                    if(lista.size()>1){
+                        values.put("multientrega", "TRUE");
+                    }else{
+                        values.put("multientrega", "null");
+                    }
+                    values.put("decCode", "null");
+                    values.put("idTelefono", android_id);
+                    values.put("coneccion", net);
+                    values.put("canal", "null");
+                    values.put("idCliente", "false");
+                    values.put("idSucursal", "false");
+                    values.put("bultos","false");
+                    values.put("telefono","false");
+                    values.put("mail", "false");
+                    values.put("dia", fechaFormat[0]);
+                    Long id_result = db.insert("certificaciones", codigo, values);
+                    Log.e("trace", "inserto con id" + id_result);
                 }
-            values.put("foto1", base1);
-            values.put("foto2", base2);
-            values.put("foto3", base3);
-            values.put("fechaIngreso", fecha2);
-            values.put("fechaEnvio", "null");
-            values.put("status", "null");
-            values.put("codEstado", "0");
-            values.put("tipoCertificacion", "normal");
-            if(lista.size()>1){
-                values.put("multientrega", "TRUE");
-            }else{
-                values.put("multientrega", "null");
+            } catch (Exception e) {
+                Log.e("trace", e.getMessage());
             }
-            values.put("decCode", "null");
-            values.put("idTelefono", android_id);
-            values.put("coneccion", net);
-            values.put("canal", "null");
-            values.put("idCliente", "false");
-            values.put("idSucursal", "false");
-            values.put("bultos","false");
-            values.put("telefono","false");
-            values.put("mail", "false");
-            values.put("dia", fechaFormat[0]);
-            Long id_result = db.insert("certificaciones", codigo, values);
-        }
-           /* ContentValues values2 = new ContentValues();
-            values2.put("id", codigo);
-            values2.put("fechaIngreso", fecha2);
-            values2.put("latitud", latitud);
-            values2.put("longitud", longitud);
-            values2.put("accion", "entregaNormal");
-            values2.put("fechaEnvio", "null");
+        Log.e("trace", "creo certificacion");
 
-            Long id_result = db.insert("acciones", codigo, values2);  */
-            db.close();
+            Log.e("state", "Va a consultar");
+            try {
+                Cursor cursor = db.rawQuery("SELECT * FROM certificaciones WHERE codChofer = " + codigo, null);
+                Log.e("trace", "tamaño de sincronizacion es " + cursor.getCount());
+            }catch (Exception e){
+                Log.e("trace", e.getMessage());
+
+            }
         Intent output = new Intent();
         output.putExtra("procesado", "true");
         setResult(RESULT_OK, output);
         this.finish();
         }
     }
-    public boolean ultimaPosicionAccion(){
-        String codigo = prefs.getString("codigo", "");
-        Log.e("ULTIMA ACCION","llego al boton ");
-        SQLiteDatabase db = conn.getReadableDatabase();
-        Log.e("ULTIMA ACCION", "Va a consultar acciones");
-        try {
-            Cursor cursor = db.rawQuery("SELECT * FROM acciones WHERE id = " + codigo, null);
-            Log.e("ULTIMA ACCION", "tamaño de las acciones es " + cursor.getCount());
-            cursor.moveToLast();
-            if(cursor.getString(2).equals("")|| cursor.getString(2).equals(null)||cursor.getString(2).equals("null")){
-                cursor.close();
-                db.close();
-                return false;
-            }else{
-                Log.e("ULTIMA ACCION",cursor.getString(0)+" ---"+cursor.getString(1)+"---"+cursor.getString(2)+"---"+cursor.getString(3)+"---"+cursor.getString(4)+"---"+cursor.getString(5));
-                latitud=cursor.getString(2);
-                longitud=cursor.getString(3);
-                cursor.close();
-                db.close();
-                return true;
-            }
-        } catch (Exception e) {
-            Log.e("ULTIMA ACCION","no encontro al consultar");
-            db.close();
-            return false;
-        }
-    }
-    public boolean ultimaPosicionGestion(){
-        String codigo = prefs.getString("codigo", "");
-        //  Log.e("ULTIMA ACCION","llego al boton ");
-        SQLiteDatabase db = conn.getReadableDatabase();
-        //   Log.e("ULTIMA ACCION", "Va a consultar acciones");
-        try {
-            Cursor cursor = db.rawQuery("SELECT * FROM certificaciones WHERE codChofer = " + codigo, null);
-            //     Log.e("ULTIMA ACCION", "tamaño de las acciones es " + cursor.getCount());
-            cursor.moveToLast();
-            if(cursor.getString(4).equals("")|| cursor.getString(4).equals(null)||cursor.getString(4).equals("null")){
-                cursor.close();
-                db.close();
-                return false;
-            }else{
-                Log.e("ULTIMA ACCION",cursor.getString(0)+" ---"+cursor.getString(1)+"---"+cursor.getString(2)+"---"+cursor.getString(3)+"---"+cursor.getString(4)+"---"+cursor.getString(5));
-                latitud=cursor.getString(4);
-                longitud=cursor.getString(5);
-                cursor.close();
-                db.close();
-                return true;
-            }
-        } catch (Exception e) {
-            Log.e("ULTIMA ACCION","no encontro al consultar");
-            db.close();
-            return false;
-        }
-    }
+
     private boolean isNetDisponible() {
 
         ConnectivityManager connectivityManager = (ConnectivityManager)

@@ -259,63 +259,6 @@ public class Dashboard extends AppCompatActivity implements AsyncResponse {
         entregas = 0;
         retirados = 0;
         consultarCertificaciones();
-        Log.e("state", "resumido dashboard");
-        //registro en base de datos local la accion
-        SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
-        Date date2 = new Date();
-        String fecha2 = dateFormat2.format(date2);
-        /*
-        Log.e("acciones","Registro Acciones");
-        if (ActivityCompat.checkSelfPermission(Dashboard.this, ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) { }
-        client.getLastLocation().addOnSuccessListener(Dashboard.this, new OnSuccessListener<Location>() {
-                @Override
-                public void onSuccess(Location location) {
-                    SQLiteDatabase db = conn.getWritableDatabase();
-                    ContentValues values = new ContentValues();
-                    SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
-                    Date date2 = new Date();
-                    String fecha2 = dateFormat2.format(date2);
-                    if(location!=null){
-                        latitud = location.getLatitude() + "";
-                        longitud = location.getLongitude() + "";
-                    }
-                    if (latitud == null || longitud == null || latitud.equals("") || longitud.equals("") || latitud.equals(" ") || longitud.equals(" ")) {
-                        if(ultimaPosicionAccion()){
-                            values.put("id", codigo);
-                            values.put("fechaIngreso", fecha2);
-                            values.put("latitud", latitud);
-                            values.put("longitud", longitud);
-                            values.put("accion", "dashboard");
-                            values.put("fechaEnvio", "null");
-                            Long id_result = db.insert("acciones", codigo, values);
-                            db.close();
-                        }else if(ultimaPosicionGestion()){
-
-                            values.put("id", codigo);
-                            values.put("fechaIngreso", fecha2);
-                            values.put("latitud", latitud);
-                            values.put("longitud", longitud);
-                            values.put("accion", "dashboard");
-                            values.put("fechaEnvio", "null");
-                            Long id_result = db.insert("acciones", codigo, values);
-                            db.close();
-                        }
-
-                    } else {
-                        values.put("id", codigo);
-                        values.put("fechaIngreso", fecha2);
-                        values.put("latitud", latitud);
-                        values.put("longitud", longitud);
-                        values.put("accion", "dashboard");
-                        values.put("fechaEnvio", "null");
-                        Long id_result = db.insert("acciones", codigo, values);
-                        db.close();
-
-                    }
-                }
-            });
-
-            */
         if (isNetDisponible()) {
             sincronizar();
         }
@@ -470,12 +413,11 @@ public class Dashboard extends AppCompatActivity implements AsyncResponse {
             Log.e("sate", "no hay internet");
         } else {
             if(identificadorServicio.equals("1")){
-            //Actualizo el registro a ya mandado
             try {
                 JSONObject jsonObject = new JSONObject(output);
-                Log.e("status", "llego del servicio " + output);
+                Log.e("trace", "llego del servicio " + output);
                 if (jsonObject.getString("success").compareTo("true") == 0 && !jsonObject.getString("ID_INSERCION").equals("0")) {
-                    Log.e("sincro", "funciono sincronizacion");
+                    Log.e("trace", "funciono sincronizacion");
                     SimpleDateFormat dateFormat2 = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault());
                     Date date2 = new Date();
                     String fecha2 = dateFormat2.format(date2);
@@ -484,7 +426,6 @@ public class Dashboard extends AppCompatActivity implements AsyncResponse {
                     String insercion = jsonObject.getString("ID_INSERCION");
                     ContentValues values = new ContentValues();
                     values.put("fechaEnvio", fecha2);
-               //     values.put("status", insercion);
                     db.update("certificaciones", values, "od = ? and fechaIngreso = ? ", parametros);
                     db.close();
                     if (faltaTransmitir > 0) {
@@ -686,9 +627,9 @@ public class Dashboard extends AppCompatActivity implements AsyncResponse {
         SQLiteDatabase db = conn.getReadableDatabase();
         try {
             Cursor cursor = db.rawQuery("SELECT * FROM certificaciones WHERE codChofer = " + codigo, null);
-            Log.e("sincro eliminado", "paso por aqui y tamaño de sincronizacion es " + cursor.getCount());
+            Log.e("trace", "sincronizar");
             while (cursor.moveToNext()) {
-                Log.e("sincro", "paso por aqui y status es  " + cursor.getString(14) + "de od es" + cursor.getString(6));
+                Log.e("trace", "llamando al servicio " + cursor.getString(13) + "de od es" + cursor.getString(6));
                 if (cursor.getString(13).equals("null")   ) {
                     Log.e("sincro", "entro por validacion de null");
                     Log.e("sincrofoto","od "+cursor.getString(6));
@@ -825,7 +766,7 @@ public class Dashboard extends AppCompatActivity implements AsyncResponse {
             retiros.setText(retirados + "");
             devolucion.setText(devoluciones + "");
             total.setText((entregas + devoluciones + retirados) + "");
-
+            Log.e("trace","entregas"+entregas+" retirados");
             if (faltaTransmitir == 0) {
                 transmisiones.setText("ESTADO: SINCRONIZADO");
             } else {
@@ -840,7 +781,7 @@ public class Dashboard extends AppCompatActivity implements AsyncResponse {
         }catch (Exception e) {
 
             Log.e("ERROR", e.getMessage() +" ");
-           Log.e("Certificaciones","no encontro al consultar");
+           Log.e("trace","no encontro al consultar");
         }
     }
     public void consultarAcciones(View v){
@@ -1263,7 +1204,8 @@ class SimpleTask2 extends AsyncTask<String, Integer, String> {
 
     @Override
     protected void onPostExecute(String result) {
-        Log.e("sincro resultado es", result);
+        Log.e("trace", "resultadoSincro");
+        Log.e("trace", result);
         super.onPostExecute(result);
         delegate.processFinish(result,"1");
     }

@@ -6,8 +6,8 @@ android {
         applicationId "com.cargo.usuario.cargoex"
         minSdkVersion 22
         targetSdkVersion 29
-        versionCode 42
-        versionName "42"
+        versionCode 53
+        versionName "53"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
